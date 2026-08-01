@@ -123,9 +123,9 @@ export default function BuilderClient() {
   };
 
   return (
-    <div dir="ltr" lang="en" className="flex h-dvh flex-col bg-slate-100">
+    <div dir="ltr" lang="en" className="flex h-dvh flex-col bg-slate-100 dark:bg-zinc-950">
       <div className="flex min-h-0 flex-1 flex-col md:flex-row">
-        <div className="flex min-h-0 flex-1 flex-col border-b border-slate-200 md:border-b-0 md:border-r">
+        <div className="flex min-h-0 flex-1 flex-col border-b border-slate-200 md:border-b-0 md:border-r dark:border-zinc-800">
           <ChatPanel
             messages={messages}
             isTyping={isTyping}

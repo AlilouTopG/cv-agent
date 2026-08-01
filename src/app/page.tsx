@@ -10,7 +10,7 @@ export default function Home() {
     <div
       dir="ltr"
       lang="en"
-      className="flex min-h-dvh flex-col bg-white font-sans text-slate-900 antialiased"
+      className="flex min-h-dvh flex-col bg-white font-sans text-slate-900 antialiased dark:bg-zinc-950 dark:text-zinc-100"
     >
       <Navbar />
       <main className="flex-1">

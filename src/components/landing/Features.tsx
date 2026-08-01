@@ -48,13 +48,13 @@ const features = [
 
 export default function Features() {
   return (
-    <section id="features" className="bg-white py-20">
+    <section id="features" className="bg-white py-20 dark:bg-zinc-950">
       <div className="mx-auto max-w-7xl px-5">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
             Everything you need to stand out
           </h2>
-          <p className="mt-4 text-lg text-slate-600">
+          <p className="mt-4 text-lg text-slate-600 dark:text-zinc-400">
             CV Agent combines conversation, intelligence, and clean design into
             one seamless experience.
           </p>
@@ -64,15 +64,15 @@ export default function Features() {
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-[#2563eb]/30 hover:shadow-lg"
+              className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-[#2563eb]/30 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-[#2563eb]/40"
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#2563eb]/10 to-[#7c3aed]/10 text-[#2563eb] transition group-hover:from-[#2563eb] group-hover:to-[#7c3aed] group-hover:text-white">
                 <feature.icon className="h-5 w-5" />
               </div>
-              <h3 className="mt-4 text-lg font-semibold text-slate-900">
+              <h3 className="mt-4 text-lg font-semibold text-slate-900 dark:text-white">
                 {feature.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600">
+              <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-zinc-400">
                 {feature.description}
               </p>
             </div>

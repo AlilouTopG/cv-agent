@@ -74,13 +74,13 @@ export default function PreviewPanel({
   }, []);
 
   return (
-    <div dir="ltr" lang="en" className="flex h-full flex-col bg-slate-100">
+    <div dir="ltr" lang="en" className="flex h-full flex-col bg-slate-100 dark:bg-zinc-950">
       {/* Top Header */}
-      <div className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3">
+      <div className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 dark:border-zinc-800 dark:bg-zinc-900">
         <div className="flex items-center gap-2">
-          <Eye className="h-4 w-4 text-slate-500" />
-          <h2 className="text-sm font-semibold text-slate-800">Live Preview</h2>
-          <span className="ml-1 inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700">
+          <Eye className="h-4 w-4 text-slate-500 dark:text-zinc-400" />
+          <h2 className="text-sm font-semibold text-slate-800 dark:text-white">Live Preview</h2>
+          <span className="ml-1 inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
             <CheckCircle2 className="h-3 w-3" />
             {stats.percentage}% complete
           </span>
@@ -89,10 +89,10 @@ export default function PreviewPanel({
       </div>
 
       {/* Control Toolbar: Theme, Layout & Font Switchers */}
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-slate-200 bg-white px-4 py-2.5 text-xs">
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-slate-200 bg-white px-4 py-2.5 text-xs dark:border-zinc-800 dark:bg-zinc-900">
         {/* Color Themes */}
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="flex items-center gap-1 font-semibold uppercase tracking-wider text-slate-400 mr-1">
+          <span className="flex items-center gap-1 font-semibold uppercase tracking-wider text-slate-400 mr-1 dark:text-zinc-500">
             <Palette className="h-3.5 w-3.5" />
             Theme
           </span>
@@ -106,8 +106,8 @@ export default function PreviewPanel({
                 title={t.name}
                 className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-medium transition ${
                   active
-                    ? "border-[#2563eb] bg-[#eff6ff] text-[#2563eb] shadow-sm"
-                    : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+                    ? "border-[#2563eb] bg-[#eff6ff] text-[#2563eb] shadow-sm dark:bg-[#1e3a8a] dark:text-white"
+                    : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:bg-zinc-700"
                 }`}
               >
                 <span
@@ -122,8 +122,8 @@ export default function PreviewPanel({
 
         {/* Layout Switcher */}
         {onLayoutChange && (
-          <div className="flex flex-wrap items-center gap-1.5 border-l border-slate-200 pl-4">
-            <span className="flex items-center gap-1 font-semibold uppercase tracking-wider text-slate-400 mr-1">
+          <div className="flex flex-wrap items-center gap-1.5 border-l border-slate-200 pl-4 dark:border-zinc-700">
+            <span className="flex items-center gap-1 font-semibold uppercase tracking-wider text-slate-400 mr-1 dark:text-zinc-500">
               <Layout className="h-3.5 w-3.5" />
               Layout
             </span>
@@ -137,8 +137,8 @@ export default function PreviewPanel({
                   title={l.description}
                   className={`rounded-md border px-2 py-1 font-medium transition ${
                     active
-                      ? "border-[#2563eb] bg-[#eff6ff] text-[#2563eb] shadow-sm"
-                      : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+                      ? "border-[#2563eb] bg-[#eff6ff] text-[#2563eb] shadow-sm dark:bg-[#1e3a8a] dark:text-white"
+                      : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:bg-zinc-700"
                   }`}
                 >
                   {l.name}
@@ -150,8 +150,8 @@ export default function PreviewPanel({
 
         {/* Font Style Switcher */}
         {onFontStyleChange && (
-          <div className="flex flex-wrap items-center gap-1.5 border-l border-slate-200 pl-4">
-            <span className="flex items-center gap-1 font-semibold uppercase tracking-wider text-slate-400 mr-1">
+          <div className="flex flex-wrap items-center gap-1.5 border-l border-slate-200 pl-4 dark:border-zinc-700">
+            <span className="flex items-center gap-1 font-semibold uppercase tracking-wider text-slate-400 mr-1 dark:text-zinc-500">
               <Type className="h-3.5 w-3.5" />
               Font
             </span>
@@ -165,8 +165,8 @@ export default function PreviewPanel({
                   title={f.name}
                   className={`rounded-md border px-2 py-1 font-medium transition ${
                     active
-                      ? "border-[#2563eb] bg-[#eff6ff] text-[#2563eb] shadow-sm"
-                      : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+                      ? "border-[#2563eb] bg-[#eff6ff] text-[#2563eb] shadow-sm dark:bg-[#1e3a8a] dark:text-white"
+                      : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:bg-zinc-700"
                   }`}
                   style={{ fontFamily: f.fontFamily }}
                 >
