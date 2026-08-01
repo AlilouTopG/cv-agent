@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import ChatPanel from "./ChatPanel";
 import PreviewPanel from "./PreviewPanel";
 import { createEmptyCV } from "@/lib/cv";
@@ -9,12 +9,13 @@ import {
   getGreeting,
   processUserMessage,
   type AgentState,
+  type AgentResult,
 } from "@/lib/agent";
 import { DEFAULT_THEME } from "@/lib/themes";
 import { DEFAULT_LAYOUT, DEFAULT_FONT_STYLE } from "@/lib/layouts";
 import type { CVData, ChatMessage } from "@/lib/types";
 
-const STORAGE_KEY = "cv-agent-state-v5";
+const STORAGE_KEY = "cv-agent-state-v6";
 
 interface PersistedState {
   cv: CVData;
@@ -72,6 +73,7 @@ export default function BuilderClient() {
   );
 
   const [isTyping, setIsTyping] = useState(false);
+  const [completionPercentage, setCompletionPercentage] = useState(0);
 
   useEffect(() => {
     try {
@@ -84,7 +86,7 @@ export default function BuilderClient() {
     }
   }, [cv, agentState, messages, themeId, layoutId, fontStyleId]);
 
-  const handleSend = (text: string) => {
+  const handleSend = useCallback(async (text: string) => {
     if (isTyping) return;
 
     setMessages((prev) => [
@@ -93,19 +95,31 @@ export default function BuilderClient() {
     ]);
     setIsTyping(true);
 
-    const result = processUserMessage(agentState, cv, text);
-    const delay = 550 + Math.random() * 650;
-
-    window.setTimeout(() => {
+    try {
+      const result: AgentResult = await processUserMessage(agentState, cv, text);
+      
       setAgentState(result.state);
       setCv(result.cv);
+      setCompletionPercentage(result.completionPercentage);
       setMessages((prev) => [
         ...prev,
         ...result.messages.filter((m) => m.role === "assistant"),
       ]);
+    } catch (error) {
+      console.error("Failed to process message:", error);
+      setMessages((prev) => [
+        ...prev,
+        { 
+          id: `error-${Date.now()}`, 
+          role: "assistant", 
+          content: "I'm having trouble processing that. Could you try again?",
+          suggestions: ["Try again", "Start over"],
+        },
+      ]);
+    } finally {
       setIsTyping(false);
-    }, delay);
-  };
+    }
+  }, [agentState, cv, isTyping]);
 
   const handleReset = () => {
     if (isTyping) return;
@@ -120,6 +134,7 @@ export default function BuilderClient() {
     setThemeId(DEFAULT_THEME.id);
     setLayoutId(DEFAULT_LAYOUT.id);
     setFontStyleId(DEFAULT_FONT_STYLE.id);
+    setCompletionPercentage(0);
   };
 
   return (
@@ -131,6 +146,7 @@ export default function BuilderClient() {
             isTyping={isTyping}
             onSend={handleSend}
             onReset={handleReset}
+            completionPercentage={completionPercentage}
           />
         </div>
         <div className="min-h-0 flex-1">

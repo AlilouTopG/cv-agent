@@ -9,6 +9,7 @@ interface ChatPanelProps {
   isTyping: boolean;
   onSend: (text: string) => void;
   onReset: () => void;
+  completionPercentage: number;
 }
 
 function MessageBubble({ message }: { message: ChatMessage }) {
@@ -53,11 +54,48 @@ function TypingIndicator() {
   );
 }
 
+function ProgressRing({ percentage }: { percentage: number }) {
+  const circumference = 2 * Math.PI * 16;
+  const offset = circumference - (percentage / 100) * circumference;
+  
+  return (
+    <div className="relative flex h-12 w-12 items-center justify-center">
+      <svg className="h-12 w-12 -rotate-90" viewBox="0 0 36 36">
+        <circle
+          className="text-slate-200 dark:text-zinc-700"
+          strokeWidth="3"
+          stroke="currentColor"
+          fill="transparent"
+          r="16"
+          cx="18"
+          cy="18"
+        />
+        <circle
+          className="text-[#2563eb] transition-all duration-500"
+          strokeWidth="3"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+          stroke="currentColor"
+          fill="transparent"
+          r="16"
+          cx="18"
+          cy="18"
+        />
+      </svg>
+      <span className="absolute text-xs font-bold text-slate-700 dark:text-zinc-300">
+        {percentage}%
+      </span>
+    </div>
+  );
+}
+
 export default function ChatPanel({
   messages,
   isTyping,
   onSend,
   onReset,
+  completionPercentage,
 }: ChatPanelProps) {
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -81,15 +119,13 @@ export default function ChatPanel({
     <div dir="ltr" lang="en" className="flex h-full flex-col bg-white dark:bg-zinc-900">
       <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3 dark:border-zinc-800">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#2563eb] to-[#7c3aed] shadow-sm">
-            <Sparkles className="h-4 w-4 text-white" />
-          </div>
+          <ProgressRing percentage={completionPercentage} />
           <div>
             <h2 className="text-sm font-semibold leading-tight text-slate-800 dark:text-white">
               CV Assistant
             </h2>
             <p className="text-xs text-slate-500 dark:text-zinc-400">
-              {isTyping ? "Thinking..." : "Guides you step by step"}
+              {isTyping ? "Thinking..." : completionPercentage >= 80 ? "CV ready for export!" : "Guides you step by step"}
             </p>
           </div>
         </div>

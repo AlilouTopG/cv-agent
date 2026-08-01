@@ -52,17 +52,75 @@ function initials(name: string): string {
   );
 }
 
+function SectionHeader({ title, theme }: { title: string; theme: CVTheme }) {
+  return (
+    <div className="mb-2 border-b-2 pb-1" style={{ borderColor: theme.primary }}>
+      <h2 className="text-[13px] font-bold uppercase tracking-[0.14em]" style={{ color: theme.primary }}>
+        {title}
+      </h2>
+    </div>
+  );
+}
+
+function SkillPill({ skill, theme }: { skill: string; theme: CVTheme }) {
+  return (
+    <span
+      className="inline-flex items-center rounded-sm border px-2.5 py-1 text-[11px] font-medium"
+      style={{ borderColor: theme.primary, color: theme.primary }}
+    >
+      {skill}
+    </span>
+  );
+}
+
+function ModernSkillPill({ skill }: { skill: string }) {
+  return (
+    <span
+      className="rounded-md border border-white/40 bg-white/10 px-2 py-0.5 text-[10px] font-medium text-white"
+    >
+      {skill}
+    </span>
+  );
+}
+
+function MinimalSkillPill({ skill, theme }: { skill: string; theme: CVTheme }) {
+  return (
+    <span
+      className="rounded bg-slate-100 px-2.5 py-1 text-[10.5px] font-mono text-slate-800 border"
+      style={{ borderColor: `${theme.primary}44` }}
+    >
+      {skill}
+    </span>
+  );
+}
+
+function ExecutiveSkillPill({ skill, theme }: { skill: string; theme: CVTheme }) {
+  return (
+    <span
+      className="rounded-full px-3 py-1 text-[10.5px] font-semibold border"
+      style={{ borderColor: theme.primary, color: theme.primary }}
+    >
+      {skill}
+    </span>
+  );
+}
+
 // 1. Classic Single Column
 function ClassicLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
   const hasSummary = Boolean(cv.summary?.trim());
+  const hasHighlights = Boolean(cv.highlights && cv.highlights.length > 0);
+  const hasCoreCompetencies = Boolean(cv.coreCompetencies && cv.coreCompetencies.length > 0);
   const hasExperience = Boolean(cv.experience?.trim());
   const hasSkills = Boolean(cv.skills && cv.skills.length > 0);
+  const hasLanguages = Boolean(cv.languages?.trim());
   const isEmpty =
     !cv.fullName?.trim() &&
     !cv.profession?.trim() &&
     !hasSummary &&
     !hasExperience &&
-    !hasSkills;
+    !hasSkills &&
+    !hasHighlights &&
+    !hasCoreCompetencies;
 
   return (
     <div className="px-10 py-11">
@@ -85,11 +143,7 @@ function ClassicLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
       <div className="mt-6 space-y-5">
         {(hasSummary || isEmpty) && (
           <section>
-            <div className="mb-2 border-b-2 pb-1" style={{ borderColor: theme.primary }}>
-              <h2 className="text-[13px] font-bold uppercase tracking-[0.14em]" style={{ color: theme.primary }}>
-                Executive Summary
-              </h2>
-            </div>
+            <SectionHeader title="Executive Summary" theme={theme} />
             {hasSummary ? (
               <p className="text-[11.5px] leading-relaxed text-[#374151]">
                 {cv.summary}
@@ -102,13 +156,34 @@ function ClassicLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
           </section>
         )}
 
+        {hasHighlights && (
+          <section>
+            <SectionHeader title="Key Highlights" theme={theme} />
+            <ul className="space-y-1">
+              {cv.highlights!.map((line, i) => (
+                <li key={i} className="flex gap-2 text-[11px] leading-snug text-[#374151]">
+                  <span className="shrink-0" style={{ color: theme.primary }}>★</span>
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {hasCoreCompetencies && (
+          <section>
+            <SectionHeader title="Core Competencies" theme={theme} />
+            <div className="flex flex-wrap gap-1.5">
+              {cv.coreCompetencies!.map((comp) => (
+                <SkillPill key={comp} skill={comp} theme={theme} />
+              ))}
+            </div>
+          </section>
+        )}
+
         {hasExperience && (
           <section>
-            <div className="mb-2 border-b-2 pb-1" style={{ borderColor: theme.primary }}>
-              <h2 className="text-[13px] font-bold uppercase tracking-[0.14em]" style={{ color: theme.primary }}>
-                Work & Academic Experience
-              </h2>
-            </div>
+            <SectionHeader title="Work & Academic Experience" theme={theme} />
             <ul className="space-y-1">
               {bullets(cv.experience).map((line, i) => (
                 <li key={i} className="flex gap-2 text-[11px] leading-snug text-[#374151]">
@@ -122,22 +197,21 @@ function ClassicLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
 
         {hasSkills && (
           <section>
-            <div className="mb-2 border-b-2 pb-1" style={{ borderColor: theme.primary }}>
-              <h2 className="text-[13px] font-bold uppercase tracking-[0.14em]" style={{ color: theme.primary }}>
-                Core Skills & Competencies
-              </h2>
-            </div>
+            <SectionHeader title="Core Skills & Competencies" theme={theme} />
             <div className="flex flex-wrap gap-1.5">
               {cv.skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="inline-flex items-center rounded-sm border px-2.5 py-1 text-[11px] font-medium"
-                  style={{ borderColor: theme.primary, color: theme.primary }}
-                >
-                  {skill}
-                </span>
+                <SkillPill key={skill} skill={skill} theme={theme} />
               ))}
             </div>
+          </section>
+        )}
+
+        {hasLanguages && (
+          <section>
+            <SectionHeader title="Languages" theme={theme} />
+            <p className="text-[11.5px] leading-relaxed text-[#374151]">
+              {cv.languages}
+            </p>
           </section>
         )}
       </div>
@@ -151,8 +225,11 @@ function ModernSplitLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
     Boolean
   );
   const hasSummary = Boolean(cv.summary?.trim());
+  const hasHighlights = Boolean(cv.highlights && cv.highlights.length > 0);
+  const hasCoreCompetencies = Boolean(cv.coreCompetencies && cv.coreCompetencies.length > 0);
   const hasSkills = Boolean(cv.skills && cv.skills.length > 0);
   const hasExperience = Boolean(cv.experience?.trim());
+  const hasLanguages = Boolean(cv.languages?.trim());
 
   return (
     <div className="flex min-h-[1123px] text-[#1f2937]">
@@ -190,14 +267,35 @@ function ModernSplitLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
             <div className="mt-2 border-t border-white/20 pt-2.5">
               <div className="flex flex-wrap gap-1.5">
                 {cv.skills.map((s) => (
-                  <span
-                    key={s}
-                    className="rounded-md border border-white/40 bg-white/10 px-2 py-0.5 text-[10px] font-medium text-white"
-                  >
-                    {s}
-                  </span>
+                  <ModernSkillPill key={s} skill={s} />
                 ))}
               </div>
+            </div>
+          </section>
+        )}
+
+        {hasCoreCompetencies && (
+          <section className="mt-8">
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/80">
+              Competencies
+            </h3>
+            <div className="mt-2 border-t border-white/20 pt-2.5">
+              <div className="flex flex-wrap gap-1.5">
+                {cv.coreCompetencies!.map((c) => (
+                  <ModernSkillPill key={c} skill={c} />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {hasLanguages && (
+          <section className="mt-8">
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/80">
+              Languages
+            </h3>
+            <div className="mt-2 border-t border-white/20 pt-2.5">
+              <p className="text-[10.5px] text-white/95">{cv.languages}</p>
             </div>
           </section>
         )}
@@ -235,6 +333,25 @@ function ModernSplitLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
           </section>
         )}
 
+        {hasHighlights && (
+          <section className="mt-6">
+            <h2
+              className="text-[11px] font-bold uppercase tracking-[0.16em]"
+              style={{ color: theme.primary }}
+            >
+              Key Achievements
+            </h2>
+            <ul className="mt-2 space-y-1.5">
+              {cv.highlights!.map((line, i) => (
+                <li key={i} className="flex gap-2 text-[11px] leading-snug text-[#374151]">
+                  <span className="shrink-0" style={{ color: theme.primary }}>★</span>
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         {hasExperience && (
           <section className="mt-6">
             <h2
@@ -253,6 +370,20 @@ function ModernSplitLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
             </ul>
           </section>
         )}
+
+        {hasLanguages && (
+          <section className="mt-6">
+            <h2
+              className="text-[11px] font-bold uppercase tracking-[0.16em]"
+              style={{ color: theme.primary }}
+            >
+              Languages
+            </h2>
+            <p className="mt-2 text-[11px] leading-relaxed text-[#374151]">
+              {cv.languages}
+            </p>
+          </section>
+        )}
       </div>
     </div>
   );
@@ -264,8 +395,11 @@ function MinimalLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
     Boolean
   );
   const hasSummary = Boolean(cv.summary?.trim());
+  const hasHighlights = Boolean(cv.highlights && cv.highlights.length > 0);
+  const hasCoreCompetencies = Boolean(cv.coreCompetencies && cv.coreCompetencies.length > 0);
   const hasSkills = Boolean(cv.skills && cv.skills.length > 0);
   const hasExperience = Boolean(cv.experience?.trim());
+  const hasLanguages = Boolean(cv.languages?.trim());
 
   return (
     <div className="px-10 py-12">
@@ -298,6 +432,35 @@ function MinimalLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
           </section>
         )}
 
+        {hasHighlights && (
+          <section>
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: theme.primary }}>
+              Highlights
+            </h3>
+            <ul className="mt-2 space-y-1">
+              {cv.highlights!.map((line, i) => (
+                <li key={i} className="flex gap-2 text-[11px] leading-snug text-[#374151]">
+                  <span className="shrink-0 font-mono text-slate-400">★</span>
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {hasCoreCompetencies && (
+          <section>
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: theme.primary }}>
+              Core Competencies
+            </h3>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {cv.coreCompetencies!.map((c) => (
+                <MinimalSkillPill key={c} skill={c} theme={theme} />
+              ))}
+            </div>
+          </section>
+        )}
+
         {hasSkills && (
           <section>
             <h3 className="text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: theme.primary }}>
@@ -305,13 +468,7 @@ function MinimalLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
             </h3>
             <div className="mt-2 flex flex-wrap gap-2">
               {cv.skills.map((s) => (
-                <span
-                  key={s}
-                  className="rounded bg-slate-100 px-2.5 py-1 text-[10.5px] font-mono text-slate-800 border"
-                  style={{ borderColor: `${theme.primary}44` }}
-                >
-                  {s}
-                </span>
+                <MinimalSkillPill key={s} skill={s} theme={theme} />
               ))}
             </div>
           </section>
@@ -325,11 +482,22 @@ function MinimalLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
             <ul className="mt-2 space-y-1.5">
               {bullets(cv.experience).map((line, i) => (
                 <li key={i} className="flex gap-2 text-[11px] leading-snug text-[#374151]">
-                  <span className="shrink-0 font-mono text-slate-400">&gt;</span>
+                  <span className="shrink-0 font-mono text-slate-400">{'>'}</span>
                   <span>{line}</span>
                 </li>
               ))}
             </ul>
+          </section>
+        )}
+
+        {hasLanguages && (
+          <section>
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: theme.primary }}>
+              Languages
+            </h3>
+            <p className="mt-2 text-[11px] leading-relaxed text-[#374151]">
+              {cv.languages}
+            </p>
           </section>
         )}
       </div>
@@ -343,8 +511,11 @@ function ExecutiveLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
     Boolean
   );
   const hasSummary = Boolean(cv.summary?.trim());
+  const hasHighlights = Boolean(cv.highlights && cv.highlights.length > 0);
+  const hasCoreCompetencies = Boolean(cv.coreCompetencies && cv.coreCompetencies.length > 0);
   const hasSkills = Boolean(cv.skills && cv.skills.length > 0);
   const hasExperience = Boolean(cv.experience?.trim());
+  const hasLanguages = Boolean(cv.languages?.trim());
 
   return (
     <div className="px-14 py-12 text-center">
@@ -383,6 +554,39 @@ function ExecutiveLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
           </section>
         )}
 
+        {hasHighlights && (
+          <section>
+            <div className="mb-2 text-center">
+              <h2 className="inline-block border-b-2 px-4 pb-1 text-[12px] font-bold uppercase tracking-[0.2em]" style={{ color: theme.primary, borderColor: theme.primary }}>
+                Key Achievements
+              </h2>
+            </div>
+            <ul className="mt-2 space-y-1.5">
+              {cv.highlights!.map((line, i) => (
+                <li key={i} className="flex gap-2 text-[11px] leading-snug text-[#374151]">
+                  <span className="shrink-0 font-bold" style={{ color: theme.primary }}>★</span>
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {hasCoreCompetencies && (
+          <section>
+            <div className="mb-2 text-center">
+              <h2 className="inline-block border-b-2 px-4 pb-1 text-[12px] font-bold uppercase tracking-[0.2em]" style={{ color: theme.primary, borderColor: theme.primary }}>
+                Core Competencies
+              </h2>
+            </div>
+            <div className="mt-2 flex flex-wrap justify-center gap-2">
+              {cv.coreCompetencies!.map((comp) => (
+                <ExecutiveSkillPill key={comp} skill={comp} theme={theme} />
+              ))}
+            </div>
+          </section>
+        )}
+
         {hasExperience && (
           <section>
             <div className="mb-2 text-center">
@@ -405,20 +609,27 @@ function ExecutiveLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
           <section>
             <div className="mb-2 text-center">
               <h2 className="inline-block border-b-2 px-4 pb-1 text-[12px] font-bold uppercase tracking-[0.2em]" style={{ color: theme.primary, borderColor: theme.primary }}>
-                Core Competencies
+                Core Skills
               </h2>
             </div>
             <div className="mt-2 flex flex-wrap justify-center gap-2">
               {cv.skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="rounded-full px-3 py-1 text-[10.5px] font-semibold border"
-                  style={{ borderColor: theme.primary, color: theme.primary }}
-                >
-                  {skill}
-                </span>
+                <ExecutiveSkillPill key={skill} skill={skill} theme={theme} />
               ))}
             </div>
+          </section>
+        )}
+
+        {hasLanguages && (
+          <section>
+            <div className="mb-2 text-center">
+              <h2 className="inline-block border-b-2 px-4 pb-1 text-[12px] font-bold uppercase tracking-[0.2em]" style={{ color: theme.primary, borderColor: theme.primary }}>
+                Languages
+              </h2>
+            </div>
+            <p className="mt-2 text-[11px] leading-relaxed text-[#374151] text-center">
+              {cv.languages}
+            </p>
           </section>
         )}
       </div>
@@ -432,8 +643,11 @@ function CompactLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
     Boolean
   );
   const hasSummary = Boolean(cv.summary?.trim());
+  const hasHighlights = Boolean(cv.highlights && cv.highlights.length > 0);
+  const hasCoreCompetencies = Boolean(cv.coreCompetencies && cv.coreCompetencies.length > 0);
   const hasSkills = Boolean(cv.skills && cv.skills.length > 0);
   const hasExperience = Boolean(cv.experience?.trim());
+  const hasLanguages = Boolean(cv.languages?.trim());
 
   return (
     <div className="px-8 py-8 text-[10.5px] leading-tight">
@@ -463,6 +677,33 @@ function CompactLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
           </section>
         )}
 
+        {hasHighlights && (
+          <section>
+            <h3 className="font-bold uppercase tracking-wider text-[11px]" style={{ color: theme.primary }}>
+              Highlights
+            </h3>
+            <ul className="mt-1 space-y-1">
+              {cv.highlights!.map((line, i) => (
+                <li key={i} className="flex gap-1.5 text-slate-700">
+                  <span style={{ color: theme.primary }}>★</span>
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {hasCoreCompetencies && (
+          <section>
+            <h3 className="font-bold uppercase tracking-wider text-[11px]" style={{ color: theme.primary }}>
+              Competencies
+            </h3>
+            <p className="mt-1 text-slate-800 font-medium">
+              {cv.coreCompetencies!.join(" • ")}
+            </p>
+          </section>
+        )}
+
         {hasSkills && (
           <section>
             <h3 className="font-bold uppercase tracking-wider text-[11px]" style={{ color: theme.primary }}>
@@ -487,6 +728,15 @@ function CompactLayout({ cv, theme }: { cv: CVData; theme: CVTheme }) {
                 </li>
               ))}
             </ul>
+          </section>
+        )}
+
+        {hasLanguages && (
+          <section>
+            <h3 className="font-bold uppercase tracking-wider text-[11px]" style={{ color: theme.primary }}>
+              Languages
+            </h3>
+            <p className="mt-1 text-slate-700">{cv.languages}</p>
           </section>
         )}
       </div>
