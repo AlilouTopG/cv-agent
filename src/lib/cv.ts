@@ -224,7 +224,10 @@ export function extractDateRange(input: string): DateRange {
   const lower = input.toLowerCase();
   const hasPresent =
     /\b(present|current|now|ongoing|today)\b/.test(lower) ||
-    /\d{4}\s*(?:-|to)\s*(?:present|current|now|ongoing)/.test(lower);
+    /(الآن|الان|حالياً|حاليا|اليوم|مستمر|مستمرة|حتى الآن|حتى الان|حتى اليوم)/.test(
+      lower
+    ) ||
+    /\d{4}\s*(?:-|to|إلى|الى)\s*(?:present|current|now|ongoing)/.test(lower);
 
   const tokens: Array<{ raw: string; ts: number }> = [];
 
@@ -285,13 +288,66 @@ export function normalizeDescription(input: string): string {
 }
 
 export function isNegative(input: string): boolean {
-  return /^(no|nope|n|nah|skip|none|not really|next|done|finish|that's it|thats it)\b/i.test(
-    input
-  );
+  const token = firstToken(input).toLowerCase();
+  const negatives = new Set([
+    "no",
+    "nope",
+    "nah",
+    "skip",
+    "none",
+    "not",
+    "next",
+    "done",
+    "finish",
+    "stop",
+    "لا",
+    "كلا",
+    "كلّا",
+    "تخطي",
+    "تخطّي",
+    "اتخطى",
+    "لاحقا",
+    "لاحقاً",
+    "انتهى",
+    "انتهيت",
+    "كفى",
+    "التالي",
+    "أجلت",
+    "بعدين",
+  ]);
+  return negatives.has(token);
 }
 
 export function isPositive(input: string): boolean {
-  return /^(yes|yeah|yep|y|sure|of course|absolutely|correct|right)\b/i.test(
-    input
-  );
+  const token = firstToken(input).toLowerCase();
+  const positives = new Set([
+    "yes",
+    "yeah",
+    "yep",
+    "y",
+    "sure",
+    "of",
+    "absolutely",
+    "correct",
+    "right",
+    "نعم",
+    "اجل",
+    "أجل",
+    "اكيد",
+    "أكيد",
+    "بالتأكيد",
+    "بالطبع",
+    "صحيح",
+    "تمام",
+    "تماما",
+    "تماماً",
+    "اوكي",
+    "طيب",
+    "حاضر",
+  ]);
+  return positives.has(token);
+}
+
+function firstToken(input: string): string {
+  return input.trim().split(/[\s,،.،!؟!]+/)[0] ?? "";
 }

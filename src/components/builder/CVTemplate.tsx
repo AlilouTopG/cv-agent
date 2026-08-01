@@ -44,9 +44,7 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
       </h2>
     </div>
   );
-}
-
-function ExperienceBlock({ item }: { item: Experience }) {
+}function ExperienceBlock({ item }: { item: Experience }) {
   return (
     <div className="mb-3">
       <div className="flex items-baseline justify-between gap-3">
@@ -182,25 +180,27 @@ export default function CVTemplate({ cv }: { cv: CVData }) {
   const isEmpty = !cv.personal.fullName && !hasExperience && !hasEducation && !hasSkills;
 
   const placeholders = [
-    !cv.personal.fullName && "Your name",
-    !cv.personal.headline && "Professional title",
-    !cv.personal.summary && "A short professional summary",
-    !hasExperience && "Work experience",
-    !hasEducation && "Education",
-    !hasSkills && "Skills",
-    !hasProjects && "Projects",
-    !hasCerts && "Certifications",
+    !cv.personal.fullName && "اسمك",
+    !cv.personal.headline && "المسمى المهني",
+    !cv.personal.summary && "ملخص مهني قصير",
+    !hasExperience && "الخبرة العملية",
+    !hasEducation && "التعليم",
+    !hasSkills && "المهارات",
+    !hasProjects && "المشاريع",
+    !hasCerts && "الشهادات",
   ].filter(Boolean);
 
   return (
     <div
-      className="relative mx-auto bg-[#ffffff] text-left text-[#1f2937] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.25)]"
+      dir="rtl"
+      lang="ar"
+      className="relative mx-auto bg-[#ffffff] text-right text-[#1f2937] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.25)]"
       style={{ width: 794, minHeight: 1123 }}
     >
       <div className="px-9 py-10">
         <header className="text-center">
           <h1 className="text-[28px] font-bold leading-tight tracking-tight text-[#111827]">
-            {cv.personal.fullName || "Your Name"}
+            {cv.personal.fullName || "اسمك"}
           </h1>
           <p className="mt-1 text-[14px] font-medium text-[#2563eb]">
             {cv.personal.headline || cv.targetRole}
@@ -211,14 +211,14 @@ export default function CVTemplate({ cv }: { cv: CVData }) {
         <div className="mt-6 space-y-5">
           {(cv.personal.summary || isEmpty) && (
             <section>
-              <SectionTitle>Summary</SectionTitle>
+              <SectionTitle>الملخص</SectionTitle>
               {cv.personal.summary ? (
                 <p className="text-[11.5px] leading-relaxed text-[#374151]">
                   {cv.personal.summary}
                 </p>
               ) : (
                 <p className="text-[11.5px] italic text-[#9ca3af]">
-                  Your professional summary will appear here.
+                  سيظهر ملخصك المهني هنا.
                 </p>
               )}
             </section>
@@ -226,7 +226,7 @@ export default function CVTemplate({ cv }: { cv: CVData }) {
 
           {hasExperience && (
             <section>
-              <SectionTitle>Work Experience</SectionTitle>
+              <SectionTitle>الخبرة العملية</SectionTitle>
               {cv.experience.map((item) => (
                 <ExperienceBlock key={item.id} item={item} />
               ))}
@@ -235,7 +235,7 @@ export default function CVTemplate({ cv }: { cv: CVData }) {
 
           {hasEducation && (
             <section>
-              <SectionTitle>Education</SectionTitle>
+              <SectionTitle>التعليم</SectionTitle>
               {cv.education.map((item) => (
                 <EducationBlock key={item.id} item={item} />
               ))}
@@ -244,14 +244,14 @@ export default function CVTemplate({ cv }: { cv: CVData }) {
 
           {hasSkills && (
             <section>
-              <SectionTitle>Skills</SectionTitle>
+              <SectionTitle>المهارات</SectionTitle>
               <SkillsGrid skills={cv.skills} />
             </section>
           )}
 
           {hasProjects && (
             <section>
-              <SectionTitle>Projects</SectionTitle>
+              <SectionTitle>المشاريع</SectionTitle>
               {cv.projects.map((item) => (
                 <ProjectBlock key={item.id} item={item} />
               ))}
@@ -260,7 +260,7 @@ export default function CVTemplate({ cv }: { cv: CVData }) {
 
           {hasCerts && (
             <section>
-              <SectionTitle>Certifications</SectionTitle>
+              <SectionTitle>الشهادات</SectionTitle>
               {cv.certifications.map((item) => (
                 <CertBlock key={item.id} item={item} />
               ))}
@@ -270,7 +270,7 @@ export default function CVTemplate({ cv }: { cv: CVData }) {
           {isEmpty && placeholders.length > 0 && (
             <section className="rounded border border-dashed border-[#d1d5db] p-4">
               <p className="text-[11px] font-semibold uppercase tracking-wider text-[#6b7280]">
-                Your CV will be built here in real time
+                ستُبنى سيرتك الذاتية هنا بشكل فوري
               </p>
               <p className="mt-1 text-[11px] text-[#9ca3af]">
                 {placeholders.join(" · ")}

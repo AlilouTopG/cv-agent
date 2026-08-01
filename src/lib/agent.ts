@@ -90,11 +90,11 @@ export function getGreeting(): ChatMessage {
     id: uid("msg"),
     role: "assistant",
     content:
-      "Hi! I'm your AI CV agent 👋 I'll guide you step by step to build a professional, ATS-friendly CV. We'll cover your contact details, summary, skills, work experience, education, projects and certifications. The live preview on the right updates in real time as we go. Let's start — what's your full name?",
+      "مرحباً! أنا وكيل السيرة الذاتية الذكي 👋 سأرشدك خطوة بخطوة لبناء سيرة ذاتية احترافية متوافقة مع أنظمة التوظيف. سنغطي بيانات التواصل، الملخص، المهارات، الخبرة العملية، التعليم، المشاريع والشهادات. سترى المعاينة الحية تتحدث لحظياً أثناء تقدمنا. لنبدأ — ما اسمك الكامل؟",
   };
 }
 
-const SKIP_HINT = "Tip: you can type \"skip\" to move past any question.";
+const SKIP_HINT = "تلميح: يمكنك كتابة \"تخطي\" لتجاوز أي سؤال.";
 
 function assistant(content: string, suggestions?: string[]): ChatMessage {
   return {
@@ -153,26 +153,25 @@ export function processUserMessage(
       if (skip) {
         out.state = nextStep("headline", {});
         out.messages.push(
-          assistant("No problem, we can add your name later. What's the target role you're aiming for?", [
-            "Frontend Developer",
-            "Product Manager",
-            "Data Analyst",
-          ])
+          assistant(
+            "لا مشكلة، يمكننا إضافة اسمك لاحقاً. ما الوظيفة المستهدفة التي تسعى إليها؟",
+            ["مطوّر واجهات أمامية", "مدير منتج", "محلل بيانات"]
+          )
         );
         break;
       }
       const name = extractName(text);
       if (!name) {
         out.messages.push(
-          assistant("I didn't quite catch that. Could you tell me your full name?")
+          assistant("لم أستطع فهم ذلك. هل يمكنك إخباري باسمك الكامل؟")
         );
         break;
       }
       out.cv.personal = { ...out.cv.personal, fullName: name };
       out.messages.push(
         assistant(
-          `Nice to meet you, ${name.split(" ")[0]}! What target role are you applying for, or what's your professional title?`,
-          ["Frontend Developer", "Product Manager", "Data Analyst"]
+          `تشرفت بمعرفتك يا ${name.split(" ")[0]}! ما الوظيفة التي تستهدفها أو ما هو مسمّاك المهني؟`,
+          ["مطوّر واجهات أمامية", "مدير منتج", "محلل بيانات"]
         )
       );
       out.state = nextStep("headline", {});
@@ -183,21 +182,25 @@ export function processUserMessage(
       if (skip) {
         out.state = nextStep("email", {});
         out.messages.push(
-          assistant("Got it. What email address should I put on your CV?")
+          assistant("تمام. ما البريد الإلكتروني الذي ينبغي أن يظهر في سيرتك الذاتية؟")
         );
         break;
       }
       const headline = extractHeadline(text);
       if (!headline) {
         out.messages.push(
-          assistant("Could you rephrase that? For example: \"Frontend Engineer\" or \"Product Manager\".")
+          assistant(
+            "هل يمكنك إعادة الصياغة؟ مثلاً: \"مطوّر واجهات أمامية\" أو \"مدير منتج\"."
+          )
         );
         break;
       }
       out.cv.personal = { ...out.cv.personal, headline };
       out.cv.targetRole = headline;
       out.messages.push(
-        assistant(`Perfect — ${headline} it is. What email address should appear on your CV?`)
+        assistant(
+          `ممتاز — ${headline} إذاً. ما البريد الإلكتروني الذي ينبغي أن يظهر في سيرتك الذاتية؟`
+        )
       );
       out.state = nextStep("email", {});
       break;
@@ -217,13 +220,13 @@ export function processUserMessage(
         out.cv = nextCv;
         out.state = nextStep("location", {});
         out.messages.push(
-          assistant("That's fine, we can add contact details later. Where are you based? (city, country)")
+          assistant("لا بأس، يمكننا إضافة بيانات التواصل لاحقاً. أين مكان إقامتك؟ (المدينة، الدولة)")
         );
         break;
       }
       if (!email) {
         out.messages.push(
-          assistant("I didn't spot an email address. Could you share it? (You can also include your phone number in the same message.)")
+          assistant("لم أجد عنوان بريد إلكتروني. هل يمكنك مشاركته؟ (يمكنك أيضاً إضافة رقم هاتفك في نفس الرسالة)")
         );
         break;
       }
@@ -231,12 +234,12 @@ export function processUserMessage(
       if (phone) {
         out.state = nextStep("location", {});
         out.messages.push(
-          assistant("Got your email and phone number. Where are you based? (city, country)")
+          assistant("حصلت على بريدك الإلكتروني ورقم هاتفك. أين مكان إقامتك؟ (المدينة، الدولة)")
         );
       } else {
         out.state = nextStep("phone", {});
         out.messages.push(
-          assistant("Got your email. What's the best phone number to reach you at?")
+          assistant("حصلت على بريدك الإلكتروني. ما أفضل رقم هاتف للتواصل معك؟")
         );
       }
       break;
@@ -247,21 +250,19 @@ export function processUserMessage(
       if (skip) {
         out.state = nextStep("location", {});
         out.messages.push(
-          assistant("No problem. Where are you based? (city, country)")
+          assistant("لا مشكلة. أين مكان إقامتك؟ (المدينة، الدولة)")
         );
         break;
       }
       if (!phone) {
         out.messages.push(
-          assistant("I couldn't find a phone number in that. Could you share it, e.g. +1 555 123 4567?")
+          assistant("لم أتمكن من العثور على رقم هاتف. هل يمكنك مشاركته، مثلاً +1 555 123 4567؟")
         );
         break;
       }
       out.cv.personal = { ...out.cv.personal, phone };
       out.state = nextStep("location", {});
-      out.messages.push(
-        assistant("Thanks! Where are you based? (city, country)")
-      );
+      out.messages.push(assistant("شكراً! أين مكان إقامتك؟ (المدينة، الدولة)"));
       break;
     }
 
@@ -269,14 +270,14 @@ export function processUserMessage(
       if (skip) {
         out.state = nextStep("summary", {});
         out.messages.push(
-          assistant("Okay. Tell me a bit about yourself — write a short professional summary (2-4 sentences) describing who you are and what you bring to the table.")
+          assistant("حسناً. أخبرني قليلاً عن نفسك — اكتب ملخصاً مهنياً قصيراً (من 2 إلى 4 جمل) يصف من أنت وما الذي تميّز به.")
         );
         break;
       }
       out.cv.personal = { ...out.cv.personal, location: normalizeDescription(text) };
       out.state = nextStep("summary", {});
       out.messages.push(
-        assistant("Got it. Now a short professional summary: who are you and what makes you great at your job? 2-4 sentences is perfect.")
+        assistant("تمام. الآن ملخص مهني قصير: من أنت وما الذي يجعلك مميزاً في عملك؟ جملتان إلى أربع كافٍ.")
       );
       break;
     }
@@ -285,9 +286,9 @@ export function processUserMessage(
       if (skip) {
         out.state = nextStep("skills", {});
         out.messages.push(
-          assistant("Fine, we'll skip the summary. Let's move to skills — list your key skills separated by commas.", [
+          assistant("حسناً، سنتخطى الملخص. لننتقل إلى المهارات — اذكر مهاراتك الأساسية مفصولة بفواصل.", [
             "JavaScript, React, TypeScript, Git",
-            "Excel, SQL, Tableau, Communication",
+            "Excel, SQL, Tableau, التواصل",
           ])
         );
         break;
@@ -295,9 +296,9 @@ export function processUserMessage(
       out.cv.personal = { ...out.cv.personal, summary: normalizeDescription(text) };
       out.state = nextStep("skills", {});
       out.messages.push(
-        assistant("Great summary! Now list your key skills, separated by commas.", [
+        assistant("ملخص رائع! الآن اذكر مهاراتك الأساسية مفصولة بفواصل.", [
           "JavaScript, React, TypeScript, Git",
-          "Excel, SQL, Tableau, Communication",
+          "Excel, SQL, Tableau, التواصل",
         ])
       );
       break;
@@ -307,14 +308,14 @@ export function processUserMessage(
       if (skip) {
         out.state = nextStep("exp_company", {});
         out.messages.push(
-          assistant("Okay, we'll skip skills for now. Let's talk about work experience — where's the most recent company you worked for?")
+          assistant("حسناً، سنتخطى المهارات حالياً. لنتحدث عن الخبرة العملية — ما آخر شركة عملت فيها؟")
         );
         break;
       }
       const skills: Skill[] = parseSkills(text);
       if (skills.length === 0) {
         out.messages.push(
-          assistant("I didn't find any skills there. Try listing them like: \"JavaScript, React, Git\".")
+          assistant("لم أجد أي مهارات في هذه الرسالة. جرّب كتابتها هكذا: \"JavaScript, React, Git\".")
         );
         break;
       }
@@ -322,7 +323,7 @@ export function processUserMessage(
       out.state = nextStep("exp_company", {});
       out.messages.push(
         assistant(
-          `Nice set of skills: ${skills.map((s) => s.name).join(", ")}. Now let's add your work experience. What's the name of your most recent employer?`,
+          `مجموعة مهارات رائعة: ${skills.map((s) => s.name).join("، ")}. الآن لِنضِف خبرتك العملية. ما اسم آخر جهة عمل لك؟`,
           []
         )
       );
@@ -333,25 +334,21 @@ export function processUserMessage(
       if (skip) {
         out.state = nextStep("edu_school", {});
         out.messages.push(
-          assistant("Alright, we'll skip work experience. Now let's talk education — what school or university did you attend?")
+          assistant("حسناً، سنتخطى الخبرة العملية. لنتحدث عن التعليم — ما المدرسة أو الجامعة التي التحقت بها؟")
         );
         break;
       }
       const company = text
         .replace(/^(i (?:worked|was employed)(?: for| at)|at|with|in)\s+/i, "")
-        .replace(/[.,;!]+$/, "")
+        .replace(/[.,;!،؟]+$/, "")
         .trim();
       if (!company) {
-        out.messages.push(
-          assistant("Could you tell me the company name?")
-        );
+        out.messages.push(assistant("هل يمكنك إخباري باسم الشركة؟"));
         break;
       }
       const draft: Partial<Experience> = { company };
       out.state = nextStep("exp_role", draft);
-      out.messages.push(
-        assistant(`Great. What was your job title at ${company}?`)
-      );
+      out.messages.push(assistant(`رائع. ما مسمّاك الوظيفي في ${company}؟`));
       break;
     }
 
@@ -359,24 +356,22 @@ export function processUserMessage(
       if (skip) {
         out.state = nextStep("exp_dates", prev.experienceDraft);
         out.messages.push(
-          assistant("Okay. When did you work there? (e.g. \"Jan 2021 to Present\" or \"2020 - 2022\")")
+          assistant("حسناً. متى عملت هناك؟ (مثلاً \"يناير 2021 إلى الآن\" أو \"2020 - 2022\")")
         );
         break;
       }
       const role = text
         .replace(/^(i (?:was|worked) (?:as|a|an)|role|title|position|as)\s+/i, "")
-        .replace(/[.,;!]+$/, "")
+        .replace(/[.,;!،؟]+$/, "")
         .trim();
       if (!role) {
-        out.messages.push(
-          assistant("What was your job title there?")
-        );
+        out.messages.push(assistant("ما مسمّاك الوظيفي هناك؟"));
         break;
       }
       const draft: Partial<Experience> = { ...prev.experienceDraft, role };
       out.state = nextStep("exp_dates", draft);
       out.messages.push(
-        assistant(`Nice, ${role}. When did you start and end there? (e.g. "Jan 2021 to Present" or "2020 - 2022")`)
+        assistant(`جميل، ${role}. متى بدأت وانتهيت هناك؟ (مثلاً "يناير 2021 إلى الآن" أو "2020 - 2022")`)
       );
       break;
     }
@@ -388,12 +383,12 @@ export function processUserMessage(
           const draft: Partial<Experience> = { ...prev.experienceDraft };
           out.state = nextStep("exp_desc", draft);
           out.messages.push(
-            assistant("Okay. What were your main responsibilities or achievements in this role?")
+            assistant("حسناً. ما مسؤولياتك أو إنجازاتك الرئيسية في هذا الدور؟")
           );
           break;
         }
         out.messages.push(
-          assistant("I couldn't parse those dates. Try something like \"March 2020 - June 2023\" or \"2021 to Present\".")
+          assistant("لم أتمكن من تحليل هذه التواريخ. جرّب شيئاً مثل \"مارس 2020 - يونيو 2023\" أو \"2021 إلى الآن\".")
         );
         break;
       }
@@ -402,8 +397,8 @@ export function processUserMessage(
       out.messages.push(
         assistant(
           endDate
-            ? `Got it (${startDate} → ${endDate}). What were your main responsibilities or achievements there?`
-            : `Got it (from ${startDate}). What were your main responsibilities or achievements there?`
+            ? `تمام (${startDate} ← ${endDate}). ما مسؤولياتك أو إنجازاتك الرئيسية هناك؟`
+            : `تمام (من ${startDate}). ما مسؤولياتك أو إنجازاتك الرئيسية هناك؟`
         )
       );
       break;
@@ -413,7 +408,7 @@ export function processUserMessage(
       const description = normalizeDescription(text);
       if (!description && !skip) {
         out.messages.push(
-          assistant("Could you describe a bit what you did in that role? Even one or two achievements help.")
+          assistant("هل يمكنك وصف ما قمت به في هذا الدور؟ حتى إنجاز واحد أو إنجازان يساعدان.")
         );
         break;
       }
@@ -422,12 +417,12 @@ export function processUserMessage(
         description,
       });
       out.cv.experience = [...out.cv.experience, experience];
-      const label = experience.role || experience.company || "this position";
+      const label = experience.role || experience.company || "هذه الوظيفة";
       out.state = nextStep("exp_more", {});
       out.messages.push(
         assistant(
-          `Added ${label} to your CV. Would you like to add another work position?`,
-          ["Yes", "No, that's all"]
+          `تمت إضافة ${label} إلى سيرتك الذاتية. هل ترغب في إضافة وظيفة أخرى؟`,
+          ["نعم", "لا، هذا كل شيء"]
         )
       );
       break;
@@ -437,12 +432,12 @@ export function processUserMessage(
       if (isPositive(text) || !isNegative(text)) {
         out.state = nextStep("exp_company", {});
         out.messages.push(
-          assistant("Great — tell me the next company you worked at.")
+          assistant("رائع — أخبرني بالشركة التالية التي عملت فيها.")
         );
       } else {
         out.state = nextStep("edu_school", {});
         out.messages.push(
-          assistant("Perfect. Let's cover education — what school or university did you attend?")
+          assistant("ممتاز. لنغطِ التعليم — ما المدرسة أو الجامعة التي التحقت بها؟")
         );
       }
       break;
@@ -452,24 +447,24 @@ export function processUserMessage(
       if (skip) {
         out.state = nextStep("proj_name", {});
         out.messages.push(
-          assistant("Alright. Do you have any projects you'd like to feature? What's the first one called?")
+          assistant("حسناً. هل لديك أي مشاريع ترغب في إبرازها؟ ما اسم المشروع الأول؟")
         );
         break;
       }
       const institution = text
         .replace(/^(i (?:attended|went to|studied at)|at|the)\s+/i, "")
-        .replace(/[.,;!]+$/, "")
+        .replace(/[.,;!،؟]+$/, "")
         .trim();
       if (!institution) {
         out.messages.push(
-          assistant("Which school or university did you attend?")
+          assistant("ما المدرسة أو الجامعة التي التحقت بها؟")
         );
         break;
       }
       const draft: Partial<Education> = { institution };
       out.state = nextStep("edu_degree", draft);
       out.messages.push(
-        assistant(`Great. What degree or diploma did you earn at ${institution}?`)
+        assistant(`رائع. ما الدرجة أو الشهادة التي حصلت عليها في ${institution}؟`)
       );
       break;
     }
@@ -477,25 +472,23 @@ export function processUserMessage(
     case "edu_degree": {
       if (skip) {
         out.state = nextStep("edu_dates", prev.educationDraft);
-        out.messages.push(
-          assistant("Okay. When did you study there?")
-        );
+        out.messages.push(assistant("حسناً. متى درست هناك؟"));
         break;
       }
       const degree = text
         .replace(/^(i (?:studied|majored in|earned|got|have|hold))\s+/i, "")
-        .replace(/[.,;!]+$/, "")
+        .replace(/[.,;!،؟]+$/, "")
         .trim();
       if (!degree) {
         out.messages.push(
-          assistant("What degree did you earn? For example \"BSc Computer Science\".")
+          assistant("ما الدرجة التي حصلت عليها؟ مثلاً \"بكالوريوس علوم الحاسوب\".")
         );
         break;
       }
       const draft: Partial<Education> = { ...prev.educationDraft, degree };
       out.state = nextStep("edu_dates", draft);
       out.messages.push(
-        assistant(`Nice. When did you study there? (e.g. "2016 - 2020")`)
+        assistant(`جميل. متى درست هناك؟ (مثلاً "2016 - 2020")`)
       );
       break;
     }
@@ -510,15 +503,15 @@ export function processUserMessage(
           out.messages.push(
             assistant(
               education.degree
-                ? `Added your ${education.degree}. Would you like to add another qualification?`
-                : "Added your education entry. Would you like to add another one?",
-              ["Yes", "No, that's all"]
+                ? `تمت إضافة مؤهلك ${education.degree}. هل ترغب في إضافة مؤهل آخر؟`
+                : "تمت إضافة قيدك التعليمي. هل ترغب في إضافة مؤهل آخر؟",
+              ["نعم", "لا، هذا كل شيء"]
             )
           );
           break;
         }
         out.messages.push(
-          assistant("I couldn't parse those dates. Try something like \"2016 - 2020\" or \"September 2015 to May 2019\".")
+          assistant("لم أتمكن من تحليل هذه التواريخ. جرّب شيئاً مثل \"2016 - 2020\" أو \"سبتمبر 2015 إلى مايو 2019\".")
         );
         break;
       }
@@ -532,9 +525,9 @@ export function processUserMessage(
       out.messages.push(
         assistant(
           education.degree
-            ? `Added your ${education.degree}${endDate ? ` (${startDate} - ${endDate})` : ""}. Would you like to add another qualification?`
-            : "Added your education entry. Would you like to add another one?",
-          ["Yes", "No, that's all"]
+            ? `تمت إضافة مؤهلك ${education.degree}${endDate ? ` (${startDate} - ${endDate})` : ""}. هل ترغب في إضافة مؤهل آخر؟`
+            : "تمت إضافة قيدك التعليمي. هل ترغب في إضافة مؤهل آخر؟",
+          ["نعم", "لا، هذا كل شيء"]
         )
       );
       break;
@@ -544,12 +537,12 @@ export function processUserMessage(
       if (isPositive(text) || !isNegative(text)) {
         out.state = nextStep("edu_school", {});
         out.messages.push(
-          assistant("Great — which school or university next?")
+          assistant("رائع — ما المدرسة أو الجامعة التالية؟")
         );
       } else {
         out.state = nextStep("proj_name", {});
         out.messages.push(
-          assistant("Now let's talk projects. Do you have any standout projects to feature? What's the first one called?")
+          assistant("الآن لنتحدث عن المشاريع. هل لديك أي مشاريع مميزة لإبرازها؟ ما اسم المشروع الأول؟")
         );
       }
       break;
@@ -559,24 +552,22 @@ export function processUserMessage(
       if (skip) {
         out.state = nextStep("cert_name", {});
         out.messages.push(
-          assistant("No problem. Do you have any certifications or courses to add? What's the first one?")
+          assistant("لا مشكلة. هل لديك أي شهادات أو دورات لإضافتها؟ ما أول شهادة؟")
         );
         break;
       }
       const name = text
         .replace(/^(i (?:built|made|created|worked on)|project(?:\s+name)?\s*:?\s*)\s*/i, "")
-        .replace(/[.,;!]+$/, "")
+        .replace(/[.,;!،؟]+$/, "")
         .trim();
       if (!name) {
-        out.messages.push(
-          assistant("What's the name of the project?")
-        );
+        out.messages.push(assistant("ما اسم المشروع؟"));
         break;
       }
       const draft: Partial<Project> = { name };
       out.state = nextStep("proj_desc", draft);
       out.messages.push(
-        assistant(`Tell me a little about "${name}" — what does it do?`)
+        assistant(`أخبرني قليلاً عن "${name}" — ماذا يقدّم؟`)
       );
       break;
     }
@@ -585,21 +576,21 @@ export function processUserMessage(
       if (skip) {
         out.state = nextStep("proj_tech", prev.projectDraft);
         out.messages.push(
-          assistant("Okay. What technologies or tools did you use?")
+          assistant("حسناً. ما التقنيات أو الأدوات التي استخدمتها؟")
         );
         break;
       }
       const description = normalizeDescription(text);
       if (!description) {
         out.messages.push(
-          assistant("Could you describe the project a bit?")
+          assistant("هل يمكنك وصف المشروع قليلاً؟")
         );
         break;
       }
       const draft: Partial<Project> = { ...prev.projectDraft, description };
       out.state = nextStep("proj_tech", draft);
       out.messages.push(
-        assistant("Nice. What technologies or tools did you use on it?")
+        assistant("جميل. ما التقنيات أو الأدوات التي استخدمتها فيه؟")
       );
       break;
     }
@@ -613,8 +604,8 @@ export function processUserMessage(
       out.state = nextStep("proj_more", {});
       out.messages.push(
         assistant(
-          `Added "${project.name}" to your projects. Want to add another project?`,
-          ["Yes", "No, that's all"]
+          `تمت إضافة "${project.name}" إلى مشاريعك. هل تريد إضافة مشروع آخر؟`,
+          ["نعم", "لا، هذا كل شيء"]
         )
       );
       break;
@@ -623,13 +614,11 @@ export function processUserMessage(
     case "proj_more": {
       if (isPositive(text) || !isNegative(text)) {
         out.state = nextStep("proj_name", {});
-        out.messages.push(
-          assistant("What's the next project called?")
-        );
+        out.messages.push(assistant("ما اسم المشروع التالي؟"));
       } else {
         out.state = nextStep("cert_name", {});
         out.messages.push(
-          assistant("Let's add any certifications or courses. What's the first one?")
+          assistant("لنضف أي شهادات أو دورات. ما أول شهادة؟")
         );
       }
       break;
@@ -643,18 +632,16 @@ export function processUserMessage(
       }
       const name = text
         .replace(/^(i (?:have|hold|earned|got)|certification)\s*:?\s*/i, "")
-        .replace(/[.,;!]+$/, "")
+        .replace(/[.,;!،؟]+$/, "")
         .trim();
       if (!name) {
-        out.messages.push(
-          assistant("What's the name of the certification?")
-        );
+        out.messages.push(assistant("ما اسم الشهادة؟"));
         break;
       }
       const draft: Partial<Certification> = { name };
       out.state = nextStep("cert_issuer", draft);
       out.messages.push(
-        assistant(`Who issued "${name}"? (You can also type "skip".)`)
+        assistant(`من أصدر "${name}"؟ (يمكنك أيضاً كتابة "تخطي".)`)
       );
       break;
     }
@@ -663,9 +650,7 @@ export function processUserMessage(
       const issuer = skip ? "" : normalizeDescription(text);
       const draft: Partial<Certification> = { ...prev.certDraft, issuer };
       out.state = nextStep("cert_year", draft);
-      out.messages.push(
-        assistant("What year did you earn it?")
-      );
+      out.messages.push(assistant("في أي سنة حصلت عليها؟"));
       break;
     }
 
@@ -679,8 +664,8 @@ export function processUserMessage(
       out.state = nextStep("cert_more", {});
       out.messages.push(
         assistant(
-          `Added ${certification.name}. Would you like to add another certification?`,
-          ["Yes", "No, that's all"]
+          `تمت إضافة ${certification.name}. هل ترغب في إضافة شهادة أخرى؟`,
+          ["نعم", "لا، هذا كل شيء"]
         )
       );
       break;
@@ -689,9 +674,7 @@ export function processUserMessage(
     case "cert_more": {
       if (isPositive(text) || !isNegative(text)) {
         out.state = nextStep("cert_name", {});
-        out.messages.push(
-          assistant("What's the next certification?")
-        );
+        out.messages.push(assistant("ما الشهادة التالية؟"));
       } else {
         out.state = nextStep("done", {});
         finishAgent(out);
@@ -701,7 +684,7 @@ export function processUserMessage(
 
     case "done": {
       out.messages.push(
-        assistant("Your CV is looking great! You can keep refining it, or hit the **Download PDF** button in the preview pane to export it. Anything else you'd like to change?")
+        assistant("سيرتك الذاتية رائعة! يمكنك الاستمرار في تحسينها، أو الضغط على زر **تنزيل PDF** في لوحة المعاينة لتصديرها. هل ترغب في تعديل أي شيء آخر؟")
       );
       out.done = true;
       break;
@@ -716,7 +699,7 @@ function finishAgent(out: AgentResult) {
   const count = out.cv.experience.length + out.cv.education.length + out.cv.projects.length + out.cv.skills.length;
   out.messages.push(
     assistant(
-      `That's everything I need! I've drafted ${count} entries for your CV. Take a look at the live preview on the right — when you're happy, click "Download PDF" to export it. You can also reply any time to tweak details.${count === 0 ? ` ${SKIP_HINT}` : ""}`
+      `هذا كل ما أحتاجه! لقد أعددت ${count} عناصر لسيرتك الذاتية. ألقِ نظرة على المعاينة الحية على اليسار — وعندما تكون راضياً، اضغط "تنزيل PDF" لتصديرها. يمكنك أيضاً الرد في أي وقت لتعديل التفاصيل.${count === 0 ? ` ${SKIP_HINT}` : ""}`
     )
   );
 }

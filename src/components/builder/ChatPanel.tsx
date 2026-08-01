@@ -23,8 +23,8 @@ function MessageBubble({ message }: { message: ChatMessage }) {
       <div
         className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed shadow-sm ${
           isUser
-            ? "rounded-br-md bg-[#2563eb] text-white"
-            : "rounded-bl-md border border-slate-200 bg-white text-slate-800"
+            ? "rounded-ee-md bg-[#2563eb] text-white"
+            : "rounded-es-md border border-slate-200 bg-white text-slate-800"
         }`}
       >
         {message.content}
@@ -44,7 +44,7 @@ function TypingIndicator() {
       <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#2563eb] to-[#7c3aed] shadow-sm">
         <Bot className="h-4 w-4 text-white" />
       </div>
-      <div className="flex items-center gap-1 rounded-2xl rounded-bl-md border border-slate-200 bg-white px-4 py-3 shadow-sm">
+      <div className="flex items-center gap-1 rounded-2xl rounded-es-md border border-slate-200 bg-white px-4 py-3 shadow-sm">
         <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-slate-400 [animation-delay:-0.3s]" />
         <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-slate-400 [animation-delay:-0.15s]" />
         <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-slate-400" />
@@ -78,7 +78,7 @@ export default function ChatPanel({
   };
 
   return (
-    <div className="flex h-full flex-col bg-white">
+    <div dir="rtl" lang="ar" className="flex h-full flex-col bg-white">
       <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
         <div className="flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#2563eb] to-[#7c3aed] shadow-sm">
@@ -86,10 +86,10 @@ export default function ChatPanel({
           </div>
           <div>
             <h2 className="text-sm font-semibold leading-tight text-slate-800">
-              CV Agent
+              وكيل السيرة الذاتية
             </h2>
             <p className="text-xs text-slate-500">
-              {isTyping ? "thinking..." : "Guiding you step by step"}
+              {isTyping ? "يفكر..." : "يرشدك خطوة بخطوة"}
             </p>
           </div>
         </div>
@@ -97,10 +97,10 @@ export default function ChatPanel({
           type="button"
           onClick={onReset}
           className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-700"
-          title="Start over"
+          title="البدء من جديد"
         >
           <RotateCcw className="h-3.5 w-3.5" />
-          Reset
+          إعادة تعيين
         </button>
       </div>
 
@@ -142,20 +142,20 @@ export default function ChatPanel({
               }
             }}
             rows={1}
-            placeholder="Type your answer here..."
+            placeholder="اكتب إجابتك هنا..."
             className="max-h-32 flex-1 resize-none bg-transparent px-2 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none"
           />
           <button
             type="submit"
             disabled={!input.trim() || isTyping}
             className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#2563eb] text-white shadow-sm transition hover:bg-[#1d4ed8] disabled:cursor-not-allowed disabled:opacity-40"
-            aria-label="Send message"
+            aria-label="إرسال الرسالة"
           >
             <Send className="h-4 w-4" />
           </button>
         </div>
         <p className="mt-1.5 px-1 text-[11px] text-slate-400">
-          Press Enter to send · Shift+Enter for a new line
+          اضغط Enter للإرسال · Shift+Enter لسطر جديد
         </p>
       </form>
     </div>
