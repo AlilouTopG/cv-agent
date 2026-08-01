@@ -1,4 +1,4 @@
-// Smart CV Data Extraction & AI Enrichment Engine - CV Agent by Nexus
+// Advanced AI CV Copywriter & Data Extraction Engine - CV Agent by Nexus
 export function extractCVData(currentData, userMessage, step) {
   let updatedData = { ...currentData };
   let nextStep = step;
@@ -8,7 +8,7 @@ export function extractCVData(currentData, userMessage, step) {
     case 0:
       updatedData.fullName = userMessage;
       nextStep = 1;
-      responseMessage = `Pleasure to meet you, ${userMessage}! What is your current target role or field of expertise? (e.g., Full-Stack Engineer, Student, Data Analyst)`;
+      responseMessage = `A pleasure, ${userMessage}! What is your current field of study, major, or target professional role? (e.g., Software Engineering Student, Full-Stack Developer, Data Analyst)`;
       break;
 
     case 1: {
@@ -16,38 +16,38 @@ export function extractCVData(currentData, userMessage, step) {
       let enhancedProfession = userMessage;
       let extraSummary = "";
 
-      if (inputLower.includes("student") || inputLower.includes("academic") || inputLower.includes("graduate")) {
-        enhancedProfession = `${userMessage} | Motivated & Driven Learner`;
-        extraSummary = "Ambitious academic background with strong dedication to skill acquisition, collaborative teamwork, and delivering results in fast-paced environments.";
+      if (inputLower.includes("student") || inputLower.includes("academic") || inputLower.includes("computer science") || inputLower.includes("university")) {
+        enhancedProfession = `${userMessage} | Ambitious Academic Scholar`;
+        extraSummary = "Dedicated and high-performing student with a rigorous academic foundation, driven by a passion for continuous learning, technical innovation, and collaborative problem-solving in dynamic environments.";
       } else if (inputLower.includes("developer") || inputLower.includes("engineer") || inputLower.includes("software") || inputLower.includes("coder")) {
-        enhancedProfession = `${userMessage} | Full-Stack Software Engineer`;
-        extraSummary = "Results-driven Developer focused on writing clean, scalable code and building modern digital products with modern web technologies and agile practices.";
+        enhancedProfession = `${userMessage} | Software Engineering Professional`;
+        extraSummary = "Results-driven Software Engineer specialized in designing, building, and scaling modern digital applications using cutting-edge tech stacks and clean architecture principles.";
       } else {
-        enhancedProfession = `${userMessage} | Dedicated Professional`;
-        extraSummary = "Motivated professional committed to achieving operational excellence, continuous learning, and driving team success.";
+        enhancedProfession = `${userMessage} | Dedicated Industry Professional`;
+        extraSummary = "Goal-oriented professional committed to delivering high-impact operational solutions, driving project excellence, and contributing to cross-functional team success.";
       }
 
       updatedData.profession = enhancedProfession;
       updatedData.summary = extraSummary;
       nextStep = 2;
-      responseMessage = "Excellent! I have enriched your professional profile summary. Now, list your key technical and core skills (comma-separated):";
+      responseMessage = "Outstanding! I've engineered a compelling professional summary and profile header for you. Now, list your core technical & professional skills (comma-separated):";
       break;
     }
 
     case 2:
       updatedData.skills = userMessage.split(',').map(s => s.trim()).filter(Boolean);
       nextStep = 3;
-      responseMessage = "Great lineup of skills! Briefly mention your key work experiences, achievements, or featured projects:";
+      responseMessage = "Fantastic skill set! Finally, share your key work experiences, major academic projects, or notable achievements:";
       break;
 
     case 3:
       updatedData.experience = userMessage;
       nextStep = 4;
-      responseMessage = "Your professional CV has been successfully generated and formatted! You can review the live preview and export it as PDF.";
+      responseMessage = "Incredible! Your executive-level CV has been fully generated, structured, and enriched. You can review the live preview and customize its layout/colors.";
       break;
 
     default:
-      responseMessage = "All details are set! Your CV is ready for export.";
+      responseMessage = "Your CV profile is completely up-to-date and ready for export!";
   }
 
   return { updatedData, nextStep, responseMessage };

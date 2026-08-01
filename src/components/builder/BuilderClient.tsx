@@ -11,15 +11,18 @@ import {
   type AgentState,
 } from "@/lib/agent";
 import { DEFAULT_THEME } from "@/lib/themes";
+import { DEFAULT_LAYOUT, DEFAULT_FONT_STYLE } from "@/lib/layouts";
 import type { CVData, ChatMessage } from "@/lib/types";
 
-const STORAGE_KEY = "cv-agent-state-v4";
+const STORAGE_KEY = "cv-agent-state-v5";
 
 interface PersistedState {
   cv: CVData;
   agentState: AgentState;
   messages: ChatMessage[];
   themeId?: string;
+  layoutId?: string;
+  fontStyleId?: string;
 }
 
 function loadPersisted(): PersistedState | null {
@@ -32,10 +35,12 @@ function loadPersisted(): PersistedState | null {
       return null;
     }
     return {
-      cv: parsed.cv,
+      cv: { ...createEmptyCV(), ...parsed.cv },
       agentState: parsed.agentState,
       messages: parsed.messages,
       themeId: parsed.themeId,
+      layoutId: parsed.layoutId,
+      fontStyleId: parsed.fontStyleId,
     };
   } catch {
     return null;
@@ -59,18 +64,25 @@ export default function BuilderClient() {
   const [themeId, setThemeId] = useState<string>(
     () => initial?.themeId ?? DEFAULT_THEME.id
   );
+  const [layoutId, setLayoutId] = useState<string>(
+    () => initial?.layoutId ?? DEFAULT_LAYOUT.id
+  );
+  const [fontStyleId, setFontStyleId] = useState<string>(
+    () => initial?.fontStyleId ?? DEFAULT_FONT_STYLE.id
+  );
+
   const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     try {
       window.localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ cv, agentState, messages, themeId })
+        JSON.stringify({ cv, agentState, messages, themeId, layoutId, fontStyleId })
       );
     } catch {
       // storage unavailable (e.g. private mode) — ignore
     }
-  }, [cv, agentState, messages, themeId]);
+  }, [cv, agentState, messages, themeId, layoutId, fontStyleId]);
 
   const handleSend = (text: string) => {
     if (isTyping) return;
@@ -106,6 +118,8 @@ export default function BuilderClient() {
     setAgentState(createInitialState());
     setMessages([getGreeting()]);
     setThemeId(DEFAULT_THEME.id);
+    setLayoutId(DEFAULT_LAYOUT.id);
+    setFontStyleId(DEFAULT_FONT_STYLE.id);
   };
 
   return (
@@ -120,7 +134,15 @@ export default function BuilderClient() {
           />
         </div>
         <div className="min-h-0 flex-1">
-          <PreviewPanel cv={cv} themeId={themeId} onThemeChange={setThemeId} />
+          <PreviewPanel
+            cv={cv}
+            themeId={themeId}
+            onThemeChange={setThemeId}
+            layoutId={layoutId}
+            onLayoutChange={setLayoutId}
+            fontStyleId={fontStyleId}
+            onFontStyleChange={setFontStyleId}
+          />
         </div>
       </div>
     </div>
