@@ -5,17 +5,29 @@ import { CheckCircle2, Eye } from "lucide-react";
 import CVTemplate from "./CVTemplate";
 import ExportButton from "./ExportButton";
 import { cvCompleteness } from "@/lib/cv";
+import { CV_THEMES, DEFAULT_THEME } from "@/lib/themes";
 import type { CVData } from "@/lib/types";
 
 const TEMPLATE_WIDTH = 794;
 const TEMPLATE_HEIGHT = 1123;
 
-export default function PreviewPanel({ cv }: { cv: CVData }) {
+interface PreviewPanelProps {
+  cv: CVData;
+  themeId: string;
+  onThemeChange: (themeId: string) => void;
+}
+
+export default function PreviewPanel({
+  cv,
+  themeId,
+  onThemeChange,
+}: PreviewPanelProps) {
   const frameRef = useRef<HTMLDivElement>(null);
   const templateRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.5);
   const [templateHeight, setTemplateHeight] = useState(TEMPLATE_HEIGHT);
   const stats = cvCompleteness(cv);
+  const theme = CV_THEMES.find((t) => t.id === themeId) ?? DEFAULT_THEME;
 
   useEffect(() => {
     const frame = frameRef.current;
@@ -58,10 +70,35 @@ export default function PreviewPanel({ cv }: { cv: CVData }) {
         <ExportButton targetRef={templateRef} />
       </div>
 
-      <div
-        ref={frameRef}
-        className="flex-1 overflow-auto px-6 py-8"
-      >
+      <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 bg-white px-4 py-2.5">
+        <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+          Theme
+        </span>
+        {CV_THEMES.map((t) => {
+          const active = t.id === theme.id;
+          return (
+            <button
+              key={t.id}
+              type="button"
+              onClick={() => onThemeChange(t.id)}
+              title={t.name}
+              className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition ${
+                active
+                  ? "border-[#2563eb] bg-[#eff6ff] text-[#2563eb] shadow-sm"
+                  : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+              }`}
+            >
+              <span
+                className="h-3 w-3 shrink-0 rounded-full border border-black/10"
+                style={{ backgroundColor: t.primary }}
+              />
+              {t.name}
+            </button>
+          );
+        })}
+      </div>
+
+      <div ref={frameRef} className="flex-1 overflow-auto px-6 py-8">
         <div
           className="relative mx-auto"
           style={{ width: TEMPLATE_WIDTH * scale, height: templateHeight * scale }}
@@ -75,7 +112,7 @@ export default function PreviewPanel({ cv }: { cv: CVData }) {
             }}
           >
             <div ref={templateRef}>
-              <CVTemplate cv={cv} />
+              <CVTemplate cv={cv} theme={theme} />
             </div>
           </div>
         </div>

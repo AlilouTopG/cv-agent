@@ -1,4 +1,5 @@
 import type { CVData } from "@/lib/types";
+import type { CVTheme } from "@/lib/themes";
 
 function bullets(text: string): string[] {
   return text
@@ -7,10 +8,19 @@ function bullets(text: string): string[] {
     .filter(Boolean);
 }
 
-function SectionTitle({ children }: { children: React.ReactNode }) {
+function SectionTitle({
+  children,
+  theme,
+}: {
+  children: React.ReactNode;
+  theme: CVTheme;
+}) {
   return (
-    <div className="mb-2 border-b-2 border-[#111827] pb-1">
-      <h2 className="text-[13px] font-bold uppercase tracking-[0.14em] text-[#111827]">
+    <div className="mb-2 border-b-2 pb-1" style={{ borderColor: theme.primary }}>
+      <h2
+        className="text-[13px] font-bold uppercase tracking-[0.14em]"
+        style={{ color: theme.primary }}
+      >
         {children}
       </h2>
     </div>
@@ -35,7 +45,13 @@ function ContactRow({ cv }: { cv: CVData }) {
   );
 }
 
-export default function CVTemplate({ cv }: { cv: CVData }) {
+export default function CVTemplate({
+  cv,
+  theme,
+}: {
+  cv: CVData;
+  theme: CVTheme;
+}) {
   const hasSummary = cv.summary.trim().length > 0;
   const hasExperience = cv.experience.trim().length > 0;
   const hasSkills = cv.skills.length > 0;
@@ -58,15 +74,21 @@ export default function CVTemplate({ cv }: { cv: CVData }) {
     <div
       dir="ltr"
       lang="en"
-      className="relative mx-auto bg-[#ffffff] text-left text-[#1f2937] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.25)]"
-      style={{ width: 794, minHeight: 1123 }}
+      className="relative mx-auto text-left text-[#1f2937] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.25)]"
+      style={{ width: 794, minHeight: 1123, backgroundColor: theme.background }}
     >
       <div className="px-9 py-10">
         <header className="text-center">
-          <h1 className="text-[28px] font-bold leading-tight tracking-tight text-[#111827]">
+          <h1
+            className="text-[28px] font-bold leading-tight tracking-tight"
+            style={{ color: theme.primary }}
+          >
             {cv.fullName || "Your Name"}
           </h1>
-          <p className="mt-1 text-[14px] font-medium text-[#2563eb]">
+          <p
+            className="mt-1 text-[14px] font-medium"
+            style={{ color: theme.primary }}
+          >
             {cv.profession || "Professional Title"}
           </p>
           <ContactRow cv={cv} />
@@ -75,7 +97,7 @@ export default function CVTemplate({ cv }: { cv: CVData }) {
         <div className="mt-6 space-y-5">
           {(hasSummary || isEmpty) && (
             <section>
-              <SectionTitle>Summary</SectionTitle>
+              <SectionTitle theme={theme}>Summary</SectionTitle>
               {hasSummary ? (
                 <p className="text-[11.5px] leading-relaxed text-[#374151]">
                   {cv.summary}
@@ -90,7 +112,7 @@ export default function CVTemplate({ cv }: { cv: CVData }) {
 
           {hasExperience && (
             <section>
-              <SectionTitle>Work Experience</SectionTitle>
+              <SectionTitle theme={theme}>Work Experience</SectionTitle>
               <ul className="space-y-0.5">
                 {bullets(cv.experience).map((line, i) => (
                   <li
@@ -107,12 +129,13 @@ export default function CVTemplate({ cv }: { cv: CVData }) {
 
           {hasSkills && (
             <section>
-              <SectionTitle>Skills</SectionTitle>
+              <SectionTitle theme={theme}>Skills</SectionTitle>
               <div className="flex flex-wrap gap-1.5">
                 {cv.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="inline-flex items-center rounded-sm border border-[#d1d5db] px-2 py-0.5 text-[11px] text-[#1f2937]"
+                    className="inline-flex items-center rounded-sm border px-2 py-0.5 text-[11px]"
+                    style={{ borderColor: theme.primary, color: theme.primary }}
                   >
                     {skill}
                   </span>

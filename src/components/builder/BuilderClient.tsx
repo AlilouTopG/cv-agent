@@ -10,14 +10,16 @@ import {
   processUserMessage,
   type AgentState,
 } from "@/lib/agent";
+import { DEFAULT_THEME } from "@/lib/themes";
 import type { CVData, ChatMessage } from "@/lib/types";
 
-const STORAGE_KEY = "cv-agent-state-v3";
+const STORAGE_KEY = "cv-agent-state-v4";
 
 interface PersistedState {
   cv: CVData;
   agentState: AgentState;
   messages: ChatMessage[];
+  themeId?: string;
 }
 
 function loadPersisted(): PersistedState | null {
@@ -33,6 +35,7 @@ function loadPersisted(): PersistedState | null {
       cv: parsed.cv,
       agentState: parsed.agentState,
       messages: parsed.messages,
+      themeId: parsed.themeId,
     };
   } catch {
     return null;
@@ -53,18 +56,21 @@ export default function BuilderClient() {
   const [messages, setMessages] = useState<ChatMessage[]>(
     () => initial?.messages ?? [getGreeting()]
   );
+  const [themeId, setThemeId] = useState<string>(
+    () => initial?.themeId ?? DEFAULT_THEME.id
+  );
   const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     try {
       window.localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ cv, agentState, messages })
+        JSON.stringify({ cv, agentState, messages, themeId })
       );
     } catch {
       // storage unavailable (e.g. private mode) — ignore
     }
-  }, [cv, agentState, messages]);
+  }, [cv, agentState, messages, themeId]);
 
   const handleSend = (text: string) => {
     if (isTyping) return;
@@ -99,6 +105,7 @@ export default function BuilderClient() {
     setCv(createEmptyCV());
     setAgentState(createInitialState());
     setMessages([getGreeting()]);
+    setThemeId(DEFAULT_THEME.id);
   };
 
   return (
@@ -113,7 +120,7 @@ export default function BuilderClient() {
           />
         </div>
         <div className="min-h-0 flex-1">
-          <PreviewPanel cv={cv} />
+          <PreviewPanel cv={cv} themeId={themeId} onThemeChange={setThemeId} />
         </div>
       </div>
     </div>
