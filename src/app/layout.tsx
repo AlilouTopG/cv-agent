@@ -32,6 +32,9 @@ export const metadata: Metadata = {
   },
   description:
     "Build a professional, ATS-friendly CV by chatting with an AI agent. Live preview and one-click PDF export.",
+  verification: {
+    google: "qW5aHNRaMPphQtxOmoOeRU4bJdy0wQ4ZWcIRbgCUkG8",
+  },
 };
 
 export default function RootLayout({
