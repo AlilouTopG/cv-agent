@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Cairo, Tajawal } from "next/font/google";
 import { Providers } from "./providers";
 import "./globals.css";
 
@@ -14,10 +14,21 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const cairo = Cairo({
+  variable: "--font-cairo",
+  subsets: ["arabic", "latin"],
+});
+
+const tajawal = Tajawal({
+  variable: "--font-tajawal",
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "700", "800"],
+});
+
 export const metadata: Metadata = {
   title: {
-    default: "NemVai — AI Interactive CV Builder",
-    template: "%s | NemVai",
+    default: "CV Agent by NemVai — AI Interactive CV Builder",
+    template: "%s | CV Agent by NemVai",
   },
   description:
     "Build a professional, ATS-friendly CV by chatting with an AI agent. Live preview and one-click PDF export.",
@@ -33,7 +44,7 @@ export default function RootLayout({
       lang="en"
       dir="ltr"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${cairo.variable} ${tajawal.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
         <ClerkProvider>

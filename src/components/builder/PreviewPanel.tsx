@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { CheckCircle2, Eye, Layout, Type, Palette } from "lucide-react";
+import { CheckCircle2, Eye, Layout, Type, Palette, Languages } from "lucide-react";
 import CVTemplate from "./CVTemplate";
 import ExportButton from "./ExportButton";
 import { cvCompleteness } from "@/lib/cv";
@@ -14,6 +14,7 @@ import {
   type LayoutId,
   type FontStyleId,
 } from "@/lib/layouts";
+import { LANGUAGES, DEFAULT_LANG, getTranslator, type LangId } from "@/lib/i18n";
 import type { CVData } from "@/lib/types";
 
 const TEMPLATE_WIDTH = 794;
@@ -27,6 +28,8 @@ interface PreviewPanelProps {
   onLayoutChange?: (layoutId: string) => void;
   fontStyleId?: string;
   onFontStyleChange?: (fontStyleId: string) => void;
+  langId?: string;
+  onLangChange?: (langId: string) => void;
 }
 
 export default function PreviewPanel({
@@ -37,6 +40,8 @@ export default function PreviewPanel({
   onLayoutChange,
   fontStyleId = DEFAULT_FONT_STYLE.id,
   onFontStyleChange,
+  langId = DEFAULT_LANG,
+  onLangChange,
 }: PreviewPanelProps) {
   const frameRef = useRef<HTMLDivElement>(null);
   const templateRef = useRef<HTMLDivElement>(null);
@@ -45,6 +50,10 @@ export default function PreviewPanel({
 
   const stats = cvCompleteness(cv);
   const theme = CV_THEMES.find((t) => t.id === themeId) ?? DEFAULT_THEME;
+  const activeLang: LangId = (["en", "fr", "ar"] as LangId[]).includes(langId as LangId)
+    ? (langId as LangId)
+    : DEFAULT_LANG;
+  const t = getTranslator(activeLang);
 
   useEffect(() => {
     const frame = frameRef.current;
@@ -79,22 +88,52 @@ export default function PreviewPanel({
       <div className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 dark:border-zinc-800 dark:bg-zinc-900">
         <div className="flex items-center gap-2">
           <Eye className="h-4 w-4 text-slate-500 dark:text-zinc-400" />
-          <h2 className="text-sm font-semibold text-slate-800 dark:text-white">Live Preview</h2>
+          <h2 className="text-sm font-semibold text-slate-800 dark:text-white">{t("livePreview")}</h2>
           <span className="ml-1 inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
             <CheckCircle2 className="h-3 w-3" />
-            {stats.percentage}% complete
+            {stats.percentage}% {t("complete")}
           </span>
         </div>
         <ExportButton targetRef={templateRef} />
       </div>
 
-      {/* Control Toolbar: Theme, Layout & Font Switchers */}
+      {/* Control Toolbar: Language, Theme, Layout & Font Switchers */}
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-slate-200 bg-white px-4 py-2.5 text-xs dark:border-zinc-800 dark:bg-zinc-900">
+        {/* Language Switcher */}
+        {onLangChange && (
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="flex items-center gap-1 font-semibold uppercase tracking-wider text-slate-400 mr-1 dark:text-zinc-500">
+              <Languages className="h-3.5 w-3.5" />
+              {activeLang === "en" ? "Language" : activeLang === "fr" ? "Langue" : "اللغة"}
+            </span>
+            {LANGUAGES.map((l) => {
+              const active = l.id === activeLang;
+              return (
+                <button
+                  key={l.id}
+                  type="button"
+                  onClick={() => onLangChange(l.id)}
+                  title={l.name}
+                  dir={l.dir}
+                  className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-1 font-medium transition ${
+                    active
+                      ? "border-[#2563eb] bg-[#eff6ff] text-[#2563eb] shadow-sm dark:bg-[#1e3a8a] dark:text-white"
+                      : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:bg-zinc-700"
+                  }`}
+                >
+                  <span>{l.flag}</span>
+                  {l.nativeName}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
         {/* Color Themes */}
         <div className="flex flex-wrap items-center gap-1.5">
           <span className="flex items-center gap-1 font-semibold uppercase tracking-wider text-slate-400 mr-1 dark:text-zinc-500">
             <Palette className="h-3.5 w-3.5" />
-            Theme
+            {t("theme")}
           </span>
           {CV_THEMES.map((t) => {
             const active = t.id === theme.id;
@@ -125,7 +164,7 @@ export default function PreviewPanel({
           <div className="flex flex-wrap items-center gap-1.5 border-l border-slate-200 pl-4 dark:border-zinc-700">
             <span className="flex items-center gap-1 font-semibold uppercase tracking-wider text-slate-400 mr-1 dark:text-zinc-500">
               <Layout className="h-3.5 w-3.5" />
-              Layout
+              {t("layout")}
             </span>
             {AVAILABLE_LAYOUTS.map((l) => {
               const active = l.id === layoutId;
@@ -153,7 +192,7 @@ export default function PreviewPanel({
           <div className="flex flex-wrap items-center gap-1.5 border-l border-slate-200 pl-4 dark:border-zinc-700">
             <span className="flex items-center gap-1 font-semibold uppercase tracking-wider text-slate-400 mr-1 dark:text-zinc-500">
               <Type className="h-3.5 w-3.5" />
-              Font
+              {t("font")}
             </span>
             {FONT_PRESETS.map((f) => {
               const active = f.id === fontStyleId;
@@ -198,6 +237,7 @@ export default function PreviewPanel({
                 theme={theme}
                 layout={layoutId as LayoutId}
                 fontStyle={fontStyleId as FontStyleId}
+                lang={activeLang}
               />
             </div>
           </div>

@@ -11,8 +11,13 @@ export default function Navbar() {
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#2563eb] to-[#7c3aed] shadow-md">
             <FileText className="h-5 w-5 text-white" />
           </div>
-          <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
-            Nem<span className="text-[#2563eb]">Vai</span>
+          <span className="flex flex-col leading-tight">
+            <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
+              CV<span className="text-[#2563eb]">Agent</span>
+            </span>
+            <span className="text-[11px] font-medium text-slate-500 dark:text-zinc-400">
+              by NemVai
+            </span>
           </span>
         </Link>
 

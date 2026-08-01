@@ -31,8 +31,8 @@ export function getGreeting(): ChatMessage {
   return {
     id: uid("msg"),
     role: "assistant",
-    content: "Welcome to NemVai! 👋 I'm your AI career coach. Let's build you an outstanding, ATS-optimized CV through natural conversation. First, what's your full name?",
-    suggestions: ["John Smith", "Maria Garcia", "Alex Johnson", "Priya Patel"],
+    content: "Welcome to CV Agent by NemVai! 👋 I'm AI Creative — your personal career coach and resume whisperer. Together we'll craft a CV that recruiters can't ignore. Let's start simply: what's your full name?",
+    suggestions: ["Sarah Johnson", "Omar Haddad", "Lina Martin", "Youssef Benali"],
   };
 }
 
@@ -48,14 +48,14 @@ function buildConversationMessages(cv: CVData, userInput: string): Array<{ role:
   const missing = getMissingFields(cv);
   const completion = getCompletionPercentage(cv);
   
-  const contextMsg = `Current CV completeness: ${completion}%. Missing essential fields: ${missing.join(", ")}. 
+  const contextMsg = `Current CV completeness: ${completion}%. Missing essential fields: ${missing.join(", ")}.
   
 Current extracted data:
 ${JSON.stringify(cv, null, 2)}
 
 User just said: "${userInput}"
 
-Extract ALL relevant information, update the CV data, and respond naturally. Ask ONE focused follow-up question for the most important missing field. Provide 3-4 contextual quick-reply suggestions.`;
+As AI Creative, the engaging expert career coach: warmly acknowledge their input, enrich it into professional, ATS-optimized content, explain one of your choices briefly, extract everything into the CV, and ask ONE focused, smart follow-up question for the most important missing field. Provide 3-4 contextual quick-reply suggestions.`;
 
   return [
     { role: "user", content: contextMsg },

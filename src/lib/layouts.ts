@@ -1,4 +1,4 @@
-export type LayoutId = "classic" | "modern_split" | "minimal" | "executive" | "compact";
+export type LayoutId = "classic" | "modern_split" | "minimal" | "executive" | "compact" | "creative";
 export type FontStyleId = "inter" | "cairo" | "tajawal" | "merriweather" | "roboto" | "geist";
 export type DecorativeDivider = "solid" | "accent-block" | "double-line" | "minimal-dash" | "none";
 export type BadgeStyle = "pill" | "rounded-sm" | "outlined" | "flat-tag";
@@ -75,6 +75,14 @@ export const AVAILABLE_LAYOUTS: LayoutConfig[] = [
     structure: "compact-dense",
     hasSidebar: false,
   },
+  {
+    id: "creative",
+    name: "Creative",
+    description: "Bold header banner, accent shapes, and dynamic typography for design-forward candidates.",
+    structure: "two-column-right",
+    hasSidebar: true,
+    sidebarPosition: "right",
+  },
 ];
 
 export const FONT_PRESETS: FontPreset[] = [
@@ -89,17 +97,17 @@ export const FONT_PRESETS: FontPreset[] = [
   {
     id: "cairo",
     name: "Cairo (Arabic & EN)",
-    fontFamily: "'Cairo', var(--font-geist-sans), sans-serif",
-    headingFamily: "'Cairo', sans-serif",
-    bodyFamily: "'Cairo', sans-serif",
+    fontFamily: "var(--font-cairo), var(--font-geist-sans), sans-serif",
+    headingFamily: "var(--font-cairo), sans-serif",
+    bodyFamily: "var(--font-cairo), sans-serif",
     scriptSupport: "bilingual",
   },
   {
     id: "tajawal",
     name: "Tajawal (Modern Arabic)",
-    fontFamily: "'Tajawal', var(--font-geist-sans), sans-serif",
-    headingFamily: "'Tajawal', sans-serif",
-    bodyFamily: "'Tajawal', sans-serif",
+    fontFamily: "var(--font-tajawal), var(--font-geist-sans), sans-serif",
+    headingFamily: "var(--font-tajawal), sans-serif",
+    bodyFamily: "var(--font-tajawal), sans-serif",
     scriptSupport: "bilingual",
   },
   {

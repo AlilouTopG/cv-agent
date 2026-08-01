@@ -23,7 +23,10 @@ export default function Hero() {
           </div>
 
           <h1 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-[3.4rem] dark:text-white">
-            🚀 NemVai
+            🚀 CV Agent{" "}
+            <span className="block text-2xl font-bold text-indigo-600 sm:text-3xl lg:text-4xl">
+              by NemVai
+            </span>
           </h1>
 
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-zinc-400">

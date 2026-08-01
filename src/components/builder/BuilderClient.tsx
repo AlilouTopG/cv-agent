@@ -13,6 +13,7 @@ import {
 } from "@/lib/agent";
 import { DEFAULT_THEME } from "@/lib/themes";
 import { DEFAULT_LAYOUT, DEFAULT_FONT_STYLE } from "@/lib/layouts";
+import { DEFAULT_LANG, type LangId } from "@/lib/i18n";
 import type { CVData, ChatMessage } from "@/lib/types";
 
 const STORAGE_KEY = "nemvai-state-v6";
@@ -24,6 +25,7 @@ interface PersistedState {
   themeId?: string;
   layoutId?: string;
   fontStyleId?: string;
+  langId?: string;
 }
 
 function loadPersisted(): PersistedState | null {
@@ -42,6 +44,7 @@ function loadPersisted(): PersistedState | null {
       themeId: parsed.themeId,
       layoutId: parsed.layoutId,
       fontStyleId: parsed.fontStyleId,
+      langId: parsed.langId,
     };
   } catch {
     return null;
@@ -71,6 +74,9 @@ export default function BuilderClient() {
   const [fontStyleId, setFontStyleId] = useState<string>(
     () => initial?.fontStyleId ?? DEFAULT_FONT_STYLE.id
   );
+  const [langId, setLangId] = useState<string>(
+    () => initial?.langId ?? DEFAULT_LANG
+  );
 
   const [isTyping, setIsTyping] = useState(false);
   const [completionPercentage, setCompletionPercentage] = useState(0);
@@ -79,12 +85,12 @@ export default function BuilderClient() {
     try {
       window.localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ cv, agentState, messages, themeId, layoutId, fontStyleId })
+        JSON.stringify({ cv, agentState, messages, themeId, layoutId, fontStyleId, langId })
       );
     } catch {
       // storage unavailable (e.g. private mode) — ignore
     }
-  }, [cv, agentState, messages, themeId, layoutId, fontStyleId]);
+  }, [cv, agentState, messages, themeId, layoutId, fontStyleId, langId]);
 
   const handleSend = useCallback(async (text: string) => {
     if (isTyping) return;
@@ -134,6 +140,7 @@ export default function BuilderClient() {
     setThemeId(DEFAULT_THEME.id);
     setLayoutId(DEFAULT_LAYOUT.id);
     setFontStyleId(DEFAULT_FONT_STYLE.id);
+    setLangId(DEFAULT_LANG);
     setCompletionPercentage(0);
   };
 
@@ -158,6 +165,8 @@ export default function BuilderClient() {
             onLayoutChange={setLayoutId}
             fontStyleId={fontStyleId}
             onFontStyleChange={setFontStyleId}
+            langId={langId as LangId}
+            onLangChange={setLangId}
           />
         </div>
       </div>
