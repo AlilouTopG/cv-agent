@@ -78,7 +78,7 @@ export default function ChatPanel({
   };
 
   return (
-    <div dir="rtl" lang="ar" className="flex h-full flex-col bg-white">
+    <div dir="ltr" lang="en" className="flex h-full flex-col bg-white">
       <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
         <div className="flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#2563eb] to-[#7c3aed] shadow-sm">
@@ -86,10 +86,10 @@ export default function ChatPanel({
           </div>
           <div>
             <h2 className="text-sm font-semibold leading-tight text-slate-800">
-              وكيل السيرة الذاتية
+              CV Assistant
             </h2>
             <p className="text-xs text-slate-500">
-              {isTyping ? "يفكر..." : "يرشدك خطوة بخطوة"}
+              {isTyping ? "Thinking..." : "Guides you step by step"}
             </p>
           </div>
         </div>
@@ -97,10 +97,10 @@ export default function ChatPanel({
           type="button"
           onClick={onReset}
           className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-700"
-          title="البدء من جديد"
+          title="Start over"
         >
           <RotateCcw className="h-3.5 w-3.5" />
-          إعادة تعيين
+          Reset
         </button>
       </div>
 
@@ -142,20 +142,20 @@ export default function ChatPanel({
               }
             }}
             rows={1}
-            placeholder="اكتب إجابتك هنا..."
+            placeholder="Type your answer here..."
             className="max-h-32 flex-1 resize-none bg-transparent px-2 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none"
           />
           <button
             type="submit"
             disabled={!input.trim() || isTyping}
             className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#2563eb] text-white shadow-sm transition hover:bg-[#1d4ed8] disabled:cursor-not-allowed disabled:opacity-40"
-            aria-label="إرسال الرسالة"
+            aria-label="Send message"
           >
             <Send className="h-4 w-4" />
           </button>
         </div>
         <p className="mt-1.5 px-1 text-[11px] text-slate-400">
-          اضغط Enter للإرسال · Shift+Enter لسطر جديد
+          Press Enter to send · Shift+Enter for a new line
         </p>
       </form>
     </div>

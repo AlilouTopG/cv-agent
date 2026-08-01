@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import BuilderClient from "@/components/builder/BuilderClient";
 
 export const metadata: Metadata = {
-  title: "بناء سيرتك الذاتية | CV Agent",
+  title: "Build Your CV | CV Agent",
   description:
-    "تحدث مع وكيل الذكاء الاصطناعي لبناء سيرة ذاتية احترافية ومتوافقة مع أنظمة التوظيف، مع معاينة حية وتصدير PDF.",
+    "Chat with an AI agent to build a professional, ATS-friendly CV with live preview and one-click PDF export.",
 };
 
 export default function BuilderPage() {

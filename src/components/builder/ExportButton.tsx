@@ -25,7 +25,7 @@ export default function ExportButton({ targetRef, disabled }: ExportButtonProps)
       });
     } catch (err) {
       console.error("PDF export failed:", err);
-      setError("فشل التصدير. حاول مرة أخرى.");
+      setError("Export failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -44,7 +44,7 @@ export default function ExportButton({ targetRef, disabled }: ExportButtonProps)
         ) : (
           <Download className="h-4 w-4" />
         )}
-        {loading ? "جارٍ إنشاء PDF..." : "تنزيل PDF"}
+        {loading ? "Generating PDF..." : "Download PDF"}
       </button>
       {error && <p className="text-xs text-red-500">{error}</p>}
     </div>

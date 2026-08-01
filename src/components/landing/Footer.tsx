@@ -3,7 +3,7 @@ import { ExternalLink, FileText } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer dir="rtl" lang="ar" className="border-t border-slate-200 bg-white">
+    <footer className="border-t border-slate-200 bg-white">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 py-8 sm:flex-row">
         <div className="flex items-center gap-2">
           <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-[#2563eb] to-[#7c3aed]">
@@ -15,8 +15,7 @@ export default function Footer() {
         </div>
 
         <p className="text-sm text-slate-500">
-          © {new Date().getFullYear()} CV Agent — ابنِ سيرتك الذاتية بشكل أفضل مع
-          الذكاء الاصطناعي.
+          © {new Date().getFullYear()} CV Agent — Build a better CV with AI.
         </p>
 
         <Link

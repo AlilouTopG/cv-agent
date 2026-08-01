@@ -12,7 +12,7 @@ import {
 } from "@/lib/agent";
 import type { CVData, ChatMessage } from "@/lib/types";
 
-const STORAGE_KEY = "cv-agent-state-v2";
+const STORAGE_KEY = "cv-agent-state-v3";
 
 interface PersistedState {
   cv: CVData;
@@ -102,9 +102,9 @@ export default function BuilderClient() {
   };
 
   return (
-    <div dir="rtl" lang="ar" className="flex h-dvh flex-col bg-slate-100">
+    <div dir="ltr" lang="en" className="flex h-dvh flex-col bg-slate-100">
       <div className="flex min-h-0 flex-1 flex-col md:flex-row">
-        <div className="flex min-h-0 flex-1 flex-col border-b border-slate-200 md:border-b-0 md:border-l">
+        <div className="flex min-h-0 flex-1 flex-col border-b border-slate-200 md:border-b-0 md:border-r">
           <ChatPanel
             messages={messages}
             isTyping={isTyping}

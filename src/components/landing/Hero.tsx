@@ -1,6 +1,6 @@
 import Link from "next/link";
 import {
-  ArrowLeft,
+  ArrowRight,
   CheckCircle2,
   Download,
   MessagesSquare,
@@ -9,7 +9,7 @@ import {
 
 export default function Hero() {
   return (
-    <section dir="rtl" lang="ar" className="relative overflow-hidden">
+    <section className="relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-40 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-r from-[#2563eb]/20 via-[#7c3aed]/20 to-[#2563eb]/10 blur-3xl" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(100,116,139,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(100,116,139,0.08)_1px,transparent_1px)] bg-[size:56px_56px]" />
@@ -19,7 +19,7 @@ export default function Hero() {
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-[#2563eb]/20 bg-[#eff6ff] px-3 py-1 text-xs font-semibold text-[#2563eb]">
             <Sparkles className="h-3.5 w-3.5" />
-            منشئ سير ذاتية تفاعلي مدعوم بالذكاء الاصطناعي
+            AI-Powered Interactive CV Builder
           </div>
 
           <h1 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-[3.4rem]">
@@ -30,8 +30,8 @@ export default function Hero() {
           </h1>
 
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-600">
-            منصة الذكاء الاصطناعي المطورة بواسطة شركة Nexus لإنشاء سيرتك
-            الذاتية باحترافية.
+            Nexus&apos; AI platform for crafting your professional CV — fast,
+            effortless, and built to help you get hired.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -39,19 +39,19 @@ export default function Hero() {
               href="/builder"
               className="inline-flex items-center gap-2 rounded-xl bg-[#2563eb] px-6 py-3 text-base font-semibold text-white shadow-lg shadow-[#2563eb]/25 transition hover:bg-[#1d4ed8]"
             >
-              ابدأ إنشاء سيرتك الذاتية
-              <ArrowLeft className="h-5 w-5" />
+              Build your CV
+              <ArrowRight className="h-5 w-5" />
             </Link>
             <a
               href="#how-it-works"
               className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3 text-base font-semibold text-slate-700 transition hover:bg-slate-50"
             >
-              شاهد كيف يعمل
+              See how it works
             </a>
           </div>
 
           <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-slate-500">
-            {["مجاني 100%", "بدون تسجيل", "متوافق مع أنظمة التوظيف"].map(
+            {["100% Free", "No sign-up required", "ATS-friendly output"].map(
               (item) => (
                 <span key={item} className="inline-flex items-center gap-1.5">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500" />
@@ -71,7 +71,7 @@ export default function Hero() {
               <span className="h-3 w-3 rounded-full bg-amber-400" />
               <span className="h-3 w-3 rounded-full bg-emerald-400" />
               <span className="ml-2 text-xs font-medium text-slate-400">
-                cv-agent — منشئ السيرة الذاتية
+                cv-agent — CV Builder
               </span>
             </div>
 
@@ -81,12 +81,12 @@ export default function Hero() {
                   <Sparkles className="h-3.5 w-3.5 text-white" />
                 </div>
                 <div className="rounded-2xl rounded-tl-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700">
-                  ما هي الوظيفة التي تستهدفها؟
+                  What role are you targeting?
                 </div>
               </div>
               <div className="flex items-start justify-end gap-2.5">
                 <div className="rounded-2xl rounded-tr-md bg-[#2563eb] px-3 py-2 text-sm text-white">
-                  مطوّر واجهات أمامية
+                  Front-End Developer
                 </div>
                 <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-800">
                   <MessagesSquare className="h-3.5 w-3.5 text-white" />
@@ -97,7 +97,7 @@ export default function Hero() {
                   <Sparkles className="h-3.5 w-3.5 text-white" />
                 </div>
                 <div className="rounded-2xl rounded-tl-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700">
-                  ممتاز! شاهد معاينة سيرتك الذاتية تتحدث لحظياً ✓
+                  Excellent! Watch your CV preview update live ✓
                 </div>
               </div>
             </div>

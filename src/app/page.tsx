@@ -8,8 +8,8 @@ import Footer from "@/components/landing/Footer";
 export default function Home() {
   return (
     <div
-      dir="rtl"
-      lang="ar"
+      dir="ltr"
+      lang="en"
       className="flex min-h-dvh flex-col bg-white font-sans text-slate-900 antialiased"
     >
       <Navbar />
