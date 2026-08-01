@@ -10,53 +10,53 @@ import {
 const features = [
   {
     icon: Bot,
-    title: "Guided AI conversation",
+    title: "محادثة ذكية موجّهة",
     description:
-      "An AI agent walks you through every section — experience, education, skills and more — so you never stare at a blank page.",
+      "يسير معك وكيل ذكاء اصطناعي خطوة بخطوة عبر كل قسم — الخبرة، التعليم، المهارات وغيرها — فلا تواجه صفحة فارغة أبداً.",
   },
   {
     icon: Layers,
-    title: "Structured data, zero effort",
+    title: "بيانات منظّمة بدون جهد",
     description:
-      "Your answers are parsed into clean, structured JSON as you type, keeping your CV organized and easy to refine.",
+      "تُحوَّل إجاباتك إلى بيانات JSON منظّمة وواضحة أثناء كتابتك، ما يحافظ على تنظيم سيرتك الذاتية وسهولة تحسينها.",
   },
   {
     icon: Gauge,
-    title: "Real-time live preview",
+    title: "معاينة حية لحظية",
     description:
-      "A split-screen layout updates a professional CV template instantly with every message you send.",
+      "تصميم مقسّم يعرض قالب سيرة ذاتية احترافي يتحدّث فوراً مع كل رسالة ترسلها.",
   },
   {
     icon: ScanSearch,
-    title: "ATS-friendly design",
+    title: "تصميم متوافق مع أنظمة ATS",
     description:
-      "Clean headings, standard sections and simple typography that applicant tracking systems parse without trouble.",
+      "عناوين واضحة وأقسام قياسية وخطوط بسيطة تستطيع أنظمة تتبع المتقدمين تحليلها دون أي مشاكل.",
   },
   {
     icon: FileDown,
-    title: "One-click PDF export",
+    title: "تصدير PDF بنقرة واحدة",
     description:
-      "Download a high-quality, print-ready PDF of your CV straight from your browser — no accounts required.",
+      "نزّل نسخة PDF عالية الجودة وجاهزة للطباعة مباشرة من متصفحك — دون الحاجة إلى أي حساب.",
   },
   {
     icon: MessageSquareText,
-    title: "Step-by-step guidance",
+    title: "إرشادات خطوة بخطوة",
     description:
-      "Helpful prompts, examples and quick-reply suggestions keep the process fast, friendly and frustration-free.",
+      "تلميحات مفيدة وأمثلة واقتراحات سريعة تجعل العملية سريعة وسهلة وخالية من الإحباط.",
   },
 ];
 
 export default function Features() {
   return (
-    <section id="features" className="bg-white py-20">
+    <section dir="rtl" lang="ar" id="features" className="bg-white py-20">
       <div className="mx-auto max-w-7xl px-5">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Everything you need to nail your next application
+            كل ما تحتاجه للتفوّق في طلبك الوظيفي
           </h2>
           <p className="mt-4 text-lg text-slate-600">
-            CV Agent combines conversation, intelligence and clean design into
-            one smooth experience.
+            يجمع CV Agent بين المحادثة والذكاء والتصميم الأنيق في تجربة واحدة
+            سلسة.
           </p>
         </div>
 

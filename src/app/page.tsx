@@ -7,7 +7,11 @@ import Footer from "@/components/landing/Footer";
 
 export default function Home() {
   return (
-    <div className="flex min-h-dvh flex-col bg-white font-sans text-slate-900 antialiased">
+    <div
+      dir="rtl"
+      lang="ar"
+      className="flex min-h-dvh flex-col bg-white font-sans text-slate-900 antialiased"
+    >
       <Navbar />
       <main className="flex-1">
         <Hero />

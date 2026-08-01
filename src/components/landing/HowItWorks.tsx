@@ -4,39 +4,41 @@ const steps = [
   {
     icon: MessageSquareText,
     step: "01",
-    title: "Chat with the agent",
+    title: "تحدّث مع الوكيل",
     description:
-      "Answer a few friendly questions about your target role, experience, education and skills. The agent guides you from start to finish.",
+      "أجب عن بعض الأسئلة البسيطة حول وظيفتك المستهدفة وخبرتك وتعليمك ومهاراتك. يرافقك الوكيل من البداية حتى النهاية.",
   },
   {
     icon: MonitorSmartphone,
     step: "02",
-    title: "Watch the preview build",
+    title: "شاهد المعاينة وهي تُبنى",
     description:
-      "Every answer instantly shapes a clean, ATS-friendly CV template in the live preview pane beside the chat.",
+      "كل إجابة تظهر فوراً في قالب سيرة ذاتية احترافي ومتوافق مع أنظمة ATS في لوحة المعاينة الحية بجانب المحادثة.",
   },
   {
     icon: FileDown,
     step: "03",
-    title: "Download your PDF",
+    title: "نزّل سيرتك بصيغة PDF",
     description:
-      "Happy with the result? Export a high-quality PDF with a single click and send it straight to employers.",
+      "هل أنت راضٍ عن النتيجة؟ صدّر نسخة PDF عالية الجودة بنقرة واحدة وأرسلها إلى أرباب العمل مباشرة.",
   },
 ];
 
 export default function HowItWorks() {
   return (
     <section
+      dir="rtl"
+      lang="ar"
       id="how-it-works"
       className="bg-gradient-to-b from-slate-50 to-white py-20"
     >
       <div className="mx-auto max-w-7xl px-5">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            From conversation to CV in three steps
+            من المحادثة إلى السيرة الذاتية في ثلاث خطوات
           </h2>
           <p className="mt-4 text-lg text-slate-600">
-            You talk, we structure. It really is that simple.
+            تتحدث ونحن ننظّم. الأمر بهذه البساطة.
           </p>
         </div>
 

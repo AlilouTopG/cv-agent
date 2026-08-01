@@ -3,7 +3,11 @@ import { FileText, Sparkles } from "lucide-react";
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-white/80 backdrop-blur-md">
+    <header
+      dir="rtl"
+      lang="ar"
+      className="sticky top-0 z-50 border-b border-slate-200/60 bg-white/80 backdrop-blur-md"
+    >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
         <Link href="/" className="flex items-center gap-2.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#2563eb] to-[#7c3aed] shadow-md">
@@ -16,10 +20,10 @@ export default function Navbar() {
 
         <nav className="hidden items-center gap-7 text-sm font-medium text-slate-600 md:flex">
           <a href="#features" className="transition hover:text-slate-900">
-            Features
+            المميزات
           </a>
           <a href="#how-it-works" className="transition hover:text-slate-900">
-            How it works
+            كيف يعمل
           </a>
         </nav>
 
@@ -28,7 +32,7 @@ export default function Navbar() {
           className="inline-flex items-center gap-2 rounded-lg bg-[#2563eb] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1d4ed8]"
         >
           <Sparkles className="h-4 w-4" />
-          Start building
+          ابدأ الإنشاء
         </Link>
       </div>
     </header>
