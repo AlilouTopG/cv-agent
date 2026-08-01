@@ -6,7 +6,7 @@ import { ThemedAuth } from "@/components/ThemedAuth";
 
 export const metadata: Metadata = {
   title: "Sign Up",
-  description: "Create your free CV Agent account and start building your CV.",
+  description: "Create your free NemVai account and start building your CV.",
 };
 
 export default function SignUpPage() {
@@ -17,7 +17,7 @@ export default function SignUpPage() {
           <FileText className="h-5 w-5 text-white" />
         </div>
         <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
-          CV<span className="text-[#2563eb]">Agent</span>
+          Nem<span className="text-[#2563eb]">Vai</span>
         </span>
       </Link>
       <ThemedAuth component={SignUp} fallbackRedirectUrl="/builder" />

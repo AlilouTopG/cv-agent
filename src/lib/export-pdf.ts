@@ -7,7 +7,7 @@ export async function exportNodeToPDF(
   node: HTMLElement,
   options: ExportOptions = {}
 ): Promise<void> {
-  const { filename = "cv-agent-resume.pdf", scale = 3 } = options;
+  const { filename = "nemvai-resume.pdf", scale = 3 } = options;
 
   const html2pdf = (await import("html2pdf.js")).default;
 

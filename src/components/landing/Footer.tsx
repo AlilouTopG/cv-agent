@@ -10,12 +10,12 @@ export default function Footer() {
             <FileText className="h-4 w-4 text-white" />
           </div>
           <span className="text-sm font-bold text-slate-900 dark:text-white">
-            CV<span className="text-[#2563eb]">Agent</span>
+            Nem<span className="text-[#2563eb]">Vai</span>
           </span>
         </div>
 
         <p className="text-sm text-slate-500 dark:text-zinc-400">
-          © {new Date().getFullYear()} CV Agent — Build a better CV with AI.
+          © {new Date().getFullYear()} NemVai — Build a better CV with AI.
         </p>
 
         <Link
@@ -23,7 +23,7 @@ export default function Footer() {
           className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white"
         >
           <ExternalLink className="h-4 w-4" />
-          cv-agent
+          nemvai
         </Link>
       </div>
     </footer>

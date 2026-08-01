@@ -31,7 +31,7 @@ export interface AIResponse {
   nextFocus: keyof ExtractedCVData | null;
 }
 
-const SYSTEM_PROMPT = `You are CV Agent, an expert AI career coach and resume writer. Your goal is to help users build a complete, ATS-optimized CV through natural conversation.
+const SYSTEM_PROMPT = `You are NemVai, an expert AI career coach and resume writer. Your goal is to help users build a complete, ATS-optimized CV through natural conversation.
 
 EXTRACTION RULES:
 1. Extract ALL relevant information from user messages into the CV schema
@@ -104,7 +104,7 @@ function fallbackAIResponse(messages: Array<{ role: string; content: string }>):
   
   if (!hasName && messages.length <= 2) {
     return {
-      message: "Welcome to CV Agent! 👋 I'm your AI career coach. Let's build you an outstanding, ATS-optimized CV. First, what's your full name?",
+      message: "Welcome to NemVai! 👋 I'm your AI career coach. Let's build you an outstanding, ATS-optimized CV. First, what's your full name?",
       extractedData: {},
       suggestions: ["John Smith", "Maria Garcia", "Alex Johnson", "Priya Patel"],
       isComplete: false,

@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "CV Agent — AI Interactive CV Builder",
-    template: "%s | CV Agent",
+    default: "NemVai — AI Interactive CV Builder",
+    template: "%s | NemVai",
   },
   description:
     "Build a professional, ATS-friendly CV by chatting with an AI agent. Live preview and one-click PDF export.",

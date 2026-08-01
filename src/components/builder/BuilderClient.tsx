@@ -15,7 +15,7 @@ import { DEFAULT_THEME } from "@/lib/themes";
 import { DEFAULT_LAYOUT, DEFAULT_FONT_STYLE } from "@/lib/layouts";
 import type { CVData, ChatMessage } from "@/lib/types";
 
-const STORAGE_KEY = "cv-agent-state-v6";
+const STORAGE_KEY = "nemvai-state-v6";
 
 interface PersistedState {
   cv: CVData;

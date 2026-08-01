@@ -31,7 +31,7 @@ export function getGreeting(): ChatMessage {
   return {
     id: uid("msg"),
     role: "assistant",
-    content: "Welcome to CV Agent! 👋 I'm your AI career coach. Let's build you an outstanding, ATS-optimized CV through natural conversation. First, what's your full name?",
+    content: "Welcome to NemVai! 👋 I'm your AI career coach. Let's build you an outstanding, ATS-optimized CV through natural conversation. First, what's your full name?",
     suggestions: ["John Smith", "Maria Garcia", "Alex Johnson", "Priya Patel"],
   };
 }

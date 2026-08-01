@@ -20,7 +20,7 @@ export default function ExportButton({ targetRef, disabled }: ExportButtonProps)
     setError(null);
     try {
       await exportNodeToPDF(node, {
-        filename: "cv-agent-resume.pdf",
+        filename: "nemvai-resume.pdf",
         scale: 3,
       });
     } catch (err) {

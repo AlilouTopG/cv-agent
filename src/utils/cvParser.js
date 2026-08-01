@@ -1,4 +1,4 @@
-// Advanced AI CV Copywriter & Data Extraction Engine - CV Agent by Nexus
+// Advanced AI CV Copywriter & Data Extraction Engine - NemVai
 export function extractCVData(currentData, userMessage, step) {
   let updatedData = { ...currentData };
   let nextStep = step;

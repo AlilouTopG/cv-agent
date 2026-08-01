@@ -1,4 +1,4 @@
-# CV Agent
+# NemVai
 
 An AI-powered, interactive CV builder. Chat with an AI agent to build a
 professional, ATS-friendly resume — with a live preview that updates in real

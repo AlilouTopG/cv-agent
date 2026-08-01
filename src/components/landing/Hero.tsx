@@ -23,14 +23,11 @@ export default function Hero() {
           </div>
 
           <h1 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-[3.4rem] dark:text-white">
-            🚀 CV Agent{" "}
-            <span className="text-2xl font-bold text-indigo-600 sm:text-3xl lg:text-4xl">
-              by Nexus
-            </span>
+            🚀 NemVai
           </h1>
 
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-zinc-400">
-            Nexus&apos; AI platform for crafting your professional CV — fast,
+            NemVai&apos;s AI platform for crafting your professional CV — fast,
             effortless, and built to help you get hired.
           </p>
 
@@ -71,7 +68,7 @@ export default function Hero() {
               <span className="h-3 w-3 rounded-full bg-amber-400" />
               <span className="h-3 w-3 rounded-full bg-emerald-400" />
               <span className="ml-2 text-xs font-medium text-slate-400">
-                cv-agent — CV Builder
+                nemvai — CV Builder
               </span>
             </div>
 

@@ -55,7 +55,7 @@ export default function Features() {
             Everything you need to stand out
           </h2>
           <p className="mt-4 text-lg text-slate-600 dark:text-zinc-400">
-            CV Agent combines conversation, intelligence, and clean design into
+            NemVai combines conversation, intelligence, and clean design into
             one seamless experience.
           </p>
         </div>
